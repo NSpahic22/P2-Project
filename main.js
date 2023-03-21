@@ -8,7 +8,7 @@ function initMap () {
      
     directionsRenderer.setMap(map);
     caluclateAndDisplayRoutes(directionsService, directionsRenderer);
-    document.getElementById("mode").addEventListener("change", () => {
+    document.getElementById("mode").addEventListener("click", () => {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
 }
@@ -19,7 +19,6 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     .route({
         origin: document.getElementById("from").value,
         destination: document.getElementById("to").value,
-
         travelMode: google.maps.TravelMode[selectedMode],
     })
     .then((response) => {
