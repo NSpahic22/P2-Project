@@ -1,4 +1,4 @@
-document.getElementById("addmore").addEventListener("click", appendinator);
+document.getElementById("submit").addEventListener("click", appendinator);
 x=1;
 function appendinator(event) {
     
