@@ -6,9 +6,12 @@
    </title>
    <link rel="stylesheet" type="text/css" href="/style.css" />
    <script src="/main.js"></script>
+   <script src="/route_diversions.js"> document.getElementById("addmore").addEventListener("click",appendinator); </script>
 </head>
 <body>
-   <div id="floating-panel">
+
+
+   <div id="routemakeinput">
 
       <div>
          <div>
@@ -27,11 +30,21 @@
       <button type="button" value="DRIVING" id="mode">Submit</button>
    </div> 
 
+   <div id="extraplaces">
+
+      <div>
+         <div>
+            <input type="text" id="extrastop" placeholder="Input extra destination">
+         </div>
+      </div>
+      <button type="button" value="submitter" id="submitextra">Submit</button>
+      <button type="button" value="+" id="addmore">+</button>
+   </div>
+
    <div id="map"></div>
 
    <script
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly"
-   async
- ></script>
+   async></script>
 </body>
 </html>
