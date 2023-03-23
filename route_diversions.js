@@ -1,4 +1,5 @@
 document.getElementById("addmore").addEventListener("click", appendinator);
+x=1;
 function appendinator(event) {
     
     const fragment = document.createDocumentFragment();
@@ -6,10 +7,13 @@ function appendinator(event) {
         .appendChild(document.createElement("div"))
         .appendChild(document.createElement("input"));
     div.placeholder = "Input extra destination"
+    div.id = "submitextra"+x;
 
     const extraplaces = document.getElementById("extraplaces");
+    
 
    extraplaces.insertBefore(fragment,document.getElementById("submitextra"));
+   x++
 }
 
 function morestops(){
