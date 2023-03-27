@@ -1,5 +1,6 @@
-document.getElementById("submit").addEventListener("click", appendinator);
+document.getElementById("addmore").addEventListener("click", appendinator);
 x=1;
+
 function appendinator(event) {
     
     const fragment = document.createDocumentFragment();
@@ -8,6 +9,7 @@ function appendinator(event) {
         .appendChild(document.createElement("input"));
     div.placeholder = "Input extra destination"
     div.id = "submitextra"+x;
+    console.log(event.value)
 
     const extraplaces = document.getElementById("extraplaces");
     

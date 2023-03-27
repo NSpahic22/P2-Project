@@ -7,7 +7,6 @@ function initMap () {
     });
      
     directionsRenderer.setMap(map);
-    caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     document.getElementById("mode").addEventListener("click", () => {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
