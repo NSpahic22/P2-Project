@@ -6,7 +6,6 @@
    </title>
 
    <link rel="stylesheet" type="text/css" href="/style.css" />
-   <script src="/main.js"></script>
 </head>
 <body>
 
@@ -30,25 +29,28 @@
       <button type="button" value="DRIVING" id="mode">Submit</button>
    </div> 
 
-   <div id="extraplaces">
-      <b>Diversions </b>
-      <button type="button" value="submitter" id="submit">Submit</button>
-      <button type="button" value="+" id="addmore">+</button>
-
-      <div>
+   <form id="myForm">
+      <fieldset id="extraplaces"> <legend> <b>Diversions</b> </legend>
+         <input type="button" name="Submit" value="Submit">;
+         <input type="button" name="addmore" value="+">:
+         
+         <!--<button type="button" value="submitter" id="submit">Submit</button>-->
+         <!--<button type="button" value="+" id="addmore">+</button>-->
+   
          <div>
-            <input type="text" id="extrastop" placeholder="Input extra destination">
+            <div>
+               <input type="text" id="extrastop" placeholder="Input extra destination">
+            </div>
          </div>
-      </div>
-
-      
-   </div>
+      </fieldset>
+   </form>
 
    <div id="map"></div>
 
+   <script src="/route_diversions.js"></script>
+   <script src="/main.js"></script>
    <script
    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly"
    async></script>
-   <script src="/route_diversions.js"></script>
 </body>
 </html>

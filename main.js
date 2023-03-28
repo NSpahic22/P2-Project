@@ -1,5 +1,7 @@
 function initMap () {
-    const directionsRenderer = new google.maps.DirectionsRenderer();
+    const directionsRenderer = new google.maps.DirectionsRenderer({
+        draggable: true,
+    });
     const directionsService = new google.maps.DirectionsService();
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
@@ -13,15 +15,19 @@ function initMap () {
 }
 
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
+    const waypts = [];
+    waypts.push(document.getElementById("submitextra"+x));
+    console.log(waypts);
     const selectedMode = document.getElementById("mode").value;
     directionsService
     .route({
         origin: document.getElementById("from").value,
         destination: document.getElementById("to").value,
         travelMode: google.maps.TravelMode[selectedMode],
+        avoidHighways: true,
     })
     .then((response) => {
         directionsRenderer.setDirections(response);
     })
-    .catch((e) => window.alert("Directions request failed due to " + status));
+    .catch((e) => window.alert("Directions request failed due to failed input"));
 }
