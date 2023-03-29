@@ -2,7 +2,7 @@
 function initMap () {
     //Assigning google functions
     const directionsRenderer = new google.maps.DirectionsRenderer({
-        draggable: true,
+        //draggable: true,
     });
     const directionsService = new google.maps.DirectionsService();
 
@@ -21,6 +21,7 @@ function initMap () {
     });
 }   
 
+
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     //The google function which:
@@ -31,7 +32,10 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         destination: document.getElementById("to").value,
         travelMode: 'DRIVING',
         avoidHighways: true,
+        waypoints: waypointarr,
+        optimizeWaypoints: true,
     })
+    
     
     //2. Creates the route
     .then((response) => {
@@ -40,5 +44,5 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
 
     //3. Should there be a mistakes, that makes the function unable to run,
     //an alert will pop up on the website
-    .catch((e) => window.alert("Directions request failed due to failed input"));
+    .catch((e) => window.alert("Directions request failed due to failed input" + status));
 }
