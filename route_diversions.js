@@ -11,6 +11,7 @@ function appendinator(event) {
     //Creates new input bar and linebreak
     const inputcreater = document.createElement("input");
     const linebreaker = document.createElement("br");
+    inputcreater.name = "diversion"
 
     //Gives input bar text and an ID
     inputcreater.placeholder = "Input extra destination";
@@ -23,24 +24,15 @@ function appendinator(event) {
    }
 
 function morestops(event, addressarr){
-    const waypointarr = [];
+    const waypointquery = document.querySelectorAll('[name="diversion"]');
     let i = 0;
+    let waypointarr = [];
 
-    for (i; i < 100; i++) {
-        const checker = document.getElementById("address"+i).value;
-        
-        if (checker != null) {
-            waypointarr[a] = checker;
-            a++;
+    for (element of waypointquery) {
+        if (element.value != null){
+            waypointarr[i]=element.value;
         }
-        
-        else if(checker === null) {
-            console.log("error");
-        }
+        i++
     }
-    
-
-
-
-    
+    console.log(waypointarr);
 }
