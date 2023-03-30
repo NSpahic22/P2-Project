@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>
+      Route-maker
+   </title>
+   <link rel="stylesheet" type="text/css" href="/style.css" />
+</head>
+<body>
+
+
+   
+      <form id="routemakeinput">
+         <fieldset> <legend> <b> Enter your route:  </b> </legend>
+            <input type="text" id="from" placeholder="Origin">
+               <br> 
+            <input type="text" id="to" placeholder="Destination">
+               <br>
+            <input type="button" value="Submit" id="mode">
+         </fieldset>
+      </form>
+
+   <form id="myForm">
+      <fieldset id="extraplaces" class="togleAble"> <legend> <b>Diversions</b> </legend>
+         <input type="button" name="Submit" value="Submit">
+         <input type="button" name="addmore" value="+">
+            <br>
+         <input type="text" name="diversion" placeholder="Input extra destination">
+            <br>
+      </fieldset>
+   </form>
+
+   <div id="map"></div>
+   <script 
+   src="/route_diversions.js"></script>
+
+   <script 
+   src="/main.js"></script>
+
+   <script
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly"
+   async></script>
+</body>
+</html>
