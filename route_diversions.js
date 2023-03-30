@@ -1,6 +1,7 @@
 //Creates event listener for when user clicks the + button
 document.querySelector('input[value="+"]').addEventListener("click", appendinator);
 document.querySelector('input[name="Submit"]').addEventListener("click", morestops);
+//document.getElementById("mode").addEventListener("click", morestops);
 
 //Helps create unique ids for each address
 let inputcounter = 1;

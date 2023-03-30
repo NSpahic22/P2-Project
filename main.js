@@ -2,7 +2,7 @@
 function initMap () {
     //Assigning google functions
     const directionsRenderer = new google.maps.DirectionsRenderer({
-        //draggable: true,
+        draggable: true,
     });
     const directionsService = new google.maps.DirectionsService();
 
@@ -19,8 +19,23 @@ function initMap () {
     document.getElementById("mode").addEventListener("click", () => {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
+    
+    //Hides different points of intrest that just cause flodder
+    map.setOptions({
+        styles: styles["hide"]
+    });
 }   
 
+//Syles defines what is hidden on the map
+const styles = {
+    default: [],
+    hide: [
+        {
+            featureType:"poi",
+            stylers: [{ visibility: "off"}],  
+        },
+    ],
+};
 
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
