@@ -6,6 +6,7 @@ function initMap () {
     });
     const directionsService = new google.maps.DirectionsService();
 
+    const trafficLayer = new google.maps.TrafficLayer();
     //Creates maps
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
@@ -14,6 +15,7 @@ function initMap () {
     
     //Sets map onto our site
     directionsRenderer.setMap(map);
+    trafficLayer.setMap(map);
     
     //Adds eventlistener to the submit button for the addresses
     document.getElementById("mode").addEventListener("click", () => {

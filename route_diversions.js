@@ -33,12 +33,14 @@ function morestops(event, addressarr){
     //Taking the value, and making into readable locations for google api
     
     for (element of waypointquery) {
-        if (element.value != '' && element.value != null){
+        if (element.value != null && element.value != ""){
             waypointarr.push({
                 location: element.value,
                 stopover: true,
             })
         }
-        i++
+        
+        i++;
     }
+    console.log(waypointarr);
 }
