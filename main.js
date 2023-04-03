@@ -19,7 +19,10 @@ function initMap () {
     document.getElementById("mode").addEventListener("click", () => {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
-    
+    document.getElementById("morestopbutton").addEventListener("click", () => {
+        caluclateAndDisplayRoutes(directionsService, directionsRenderer);
+    });
+
     //Hides different points of intrest that just cause flodder
     map.setOptions({
         styles: styles["hide"]
