@@ -1,3 +1,5 @@
+let busStopMarkers = [];
+
 //This is function is called with our API key
 function initMap () {
     //Assigning google functions
@@ -40,6 +42,8 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     //2. Creates the route
     .then((response) => {
         directionsRenderer.setDirections(response);
+        let route = response.routes[0];
+        let polyline = route.overview_polyline; 
     })
 
     //3. Should there be a mistakes, that makes the function unable to run,
