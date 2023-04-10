@@ -42,22 +42,7 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         avoidHighways: true,
         waypoints: waypointarr,
         optimizeWaypoints: true,
-        options: {
-        polylineOptions: { // specify options for the overview polyline
-            strokeColor: 'black',
-            strokeOpacity: 0.8,
-            strokeWeight: 4,
-            icons: [{
-                icon: { // add arrow icons to the polyline
-                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                    scale: 2,
-                    strokeColor: 'white',
-                    strokeWeight: 2,
-                },
-                offset: '50%', // position the arrow icons at the middle of the polyline
-            }],
-        },
-      }})
+        })
     
     
     //2. Creates the route
