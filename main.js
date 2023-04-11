@@ -5,7 +5,7 @@ function initMap () {
         draggable: true,
     });
     const directionsService = new google.maps.DirectionsService();
-
+    const transitLayer = new google.maps.TransitLayer();
     const trafficLayer = new google.maps.TrafficLayer();
     //Creates maps
     const map = new google.maps.Map(document.getElementById("map"), {
@@ -16,6 +16,7 @@ function initMap () {
     //Sets map onto our site
     directionsRenderer.setMap(map);
     trafficLayer.setMap(map);
+    transitLayer.setMap(map);
     
     //Adds eventlistener to the submit button for the addresses
     document.getElementById("mode").addEventListener("click", () => {
