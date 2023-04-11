@@ -37,13 +37,22 @@
 
    <form id="avgpassengers">
       <fieldset id="avgpass" class="passengers"> <legend> <b>Average passengers</b> </legend>
+         <input type="text" name="weeklypassengers" id="passengertext" placeholder="Average weekly passengers">
+         <input type="button" name="passengersubmit" value="submit">
+      </fieldset>
+   </form>
 
+   <form id="dataoutput">
+      <fieldset id="outputs" class="information"> <legend> <b> Outputs </b> </legend>
       </fieldset>
    </form>
 
    <div id="map"></div>
    <script 
    src="/route_diversions.js"></script>
+
+   <script
+   src="/passengers.js"></script>
 
    <script 
    src="/main.js"></script>
