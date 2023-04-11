@@ -15,13 +15,27 @@ function initMap () {
 
     const Traffic = document.getElementById("Traffic");
     Traffic.addEventListener("click", () => {
-        if (Traffic === true) {
-            console.log("den er true");
+        if (Traffic.checked === true) {
+            trafficLayer.setMap(map);
         }
         else {
-            trafficLayer.setMap(map); 
+            trafficLayer.setMap();
         }
     })
+
+    const pointsofintrest = document.getElementById("Pointsofintrest");
+    pointsofintrest.addEventListener("click", () => {
+        if (pointsofintrest.checked === true) {
+            map.setOptions({
+                styles:styles["default"]
+            });
+        }
+        else {
+            map.setOptions({
+                styles:styles["hide"]
+            }); 
+        };
+    });
     
 
     //Sets map onto our site 
