@@ -12,11 +12,21 @@ function initMap () {
         zoom: 14,
         center: {lat:57.04, lng: 9.93},
     });
+
+    const Traffic = document.getElementById("Traffic");
+    Traffic.addEventListener("click", () => {
+        if (Traffic === true) {
+            console.log("den er true");
+        }
+        else {
+            trafficLayer.setMap(map); 
+        }
+    })
     
-    //Sets map onto our site
+
+    //Sets map onto our site 
     directionsRenderer.setMap(map);
-    trafficLayer.setMap(map);
-    transitLayer.setMap(map);
+    transitLayer.setMap(map); 
     
     //Adds eventlistener to the submit button for the addresses
     document.getElementById("mode").addEventListener("click", () => {
