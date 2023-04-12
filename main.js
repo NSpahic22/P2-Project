@@ -49,10 +49,10 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
       .then((response, status) => {
         directionsRenderer.setDirections(response);
         
-        let route = response.routes[0];
+        let route = response.route;
         let polyline = route.overview_polyline; 
 
-        if (polyline && polyline.getPath) {
+       if (polyline && polyline.getPath()) {
         let routePath = polyline.getPath();
         let busStopInterval = 0.1; // in km
         let distanceTraveled = 0;
