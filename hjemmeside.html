@@ -9,9 +9,21 @@
 <body>
 
    <form id="options">
-      <fieldset> <legend> <b>   Map display options   </b> </legend>
-         <input type="button" value="Traffic" id="Traffic">
-         <input type="button" value="POI" id="Pointsofintrest">
+      <fieldset> <legend> <b> Map display options </b> </legend>
+
+         Traffic <br>
+         <label class="switch">
+            <input type="checkbox" value="Traffic" id="Traffic">
+            <span class="slider round"></span>
+         </label>
+         <br>
+      
+         Points of intrest <br>
+         <label class="switch">
+            <input type="checkbox" value="POI" id="Pointsofintrest">
+            <span class="slider round"></span>
+         </label>
+         
       </fieldset>
    </form>
 
