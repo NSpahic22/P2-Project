@@ -12,7 +12,7 @@ function initMap () {
         zoom: 14,
         center: {lat:57.04, lng: 9.93},
     });
-
+      
     const Traffic = document.getElementById("Traffic");
     Traffic.addEventListener("click", () => {
         if (Traffic.checked === true) {
@@ -21,7 +21,7 @@ function initMap () {
         else {
             trafficLayer.setMap();
         }
-    })
+    });
 
     const pointsofintrest = document.getElementById("Pointsofintrest");
     pointsofintrest.addEventListener("click", () => {
@@ -36,8 +36,23 @@ function initMap () {
             }); 
         };
     });
-    
 
+    const flightPlanCoordinates = [
+        { lat: 37.772, lng: -122.214 },
+        { lat: 21.291, lng: -157.821 },
+        { lat: -18.142, lng: 178.431 },
+        { lat: -27.467, lng: 153.027 },
+      ];
+      const flightPath = new google.maps.Polyline({
+        path: flightPlanCoordinates,
+        geodesic: true,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+      });
+    
+      flightPath.setMap(map);
+    
     //Sets map onto our site 
     directionsRenderer.setMap(map);
     transitLayer.setMap(map); 
