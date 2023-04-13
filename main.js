@@ -48,7 +48,7 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     //2. Creates the route
       .then((response, status) => {
         directionsRenderer.setDirections(response);
-        
+        /*
         let route = response.route;
         let polyline = route.overview_polyline; 
 
@@ -73,7 +73,9 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     
       } else {
         console.error("Polyline or getPath method is not available.");
-      }} )
+      }
+      */
+    } )
     
       //3. Should there be a mistakes, that makes the function unable to run,
       //an alert will pop up on the website
