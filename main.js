@@ -1,6 +1,6 @@
 let busStopMarkers = [];
 let map;
-
+let waypointarr;
 
 
 //This is function is called with our API key
@@ -38,7 +38,6 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         origin: document.getElementById("from").value,
         destination: document.getElementById("to").value,
         travelMode: 'DRIVING',
-        provideRouteAlternatives: false,
         avoidHighways: true,
         waypoints: waypointarr,
         optimizeWaypoints: true,
@@ -46,36 +45,25 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     
     
     //2. Creates the route
-      .then((response, status) => {
+      .then((response) => {
         directionsRenderer.setDirections(response);
-        /*
-        let route = response.route;
-        let polyline = route.overview_polyline; 
+        
+        let routeStart = response.routes[0].legs[0].start_location; 
+        let route = response.routes[0].overview_path;
+        let distanceTraveled = 1000;
+        let markerPosition = google.maps.geometry.spherical.computeOffset(routeStart, distanceTraveled, google.maps.geometry.spherical.computeHeading(routeStart, route[1]));
 
-       if (polyline && polyline.getPath()) {
-        let routePath = polyline.getPath();
-        let busStopInterval = 0.1; // in km
-        let distanceTraveled = 0;
-        let busStopNumber = 0;
-    
-        while (distanceTraveled < route.distance.value) {
-          busStopNumber++;
-          let busStopCoordinates = google.maps.geometry.spherical.interpolate(routePath.getAt(0), routePath.getAt(1), distanceTraveled / route.distance.value);
-          let busStopMarker = new google.maps.Marker({
-            position: busStopCoordinates,
-            map: map,
-            title: "Bus Stop " + busStopNumber,
-          });
-    
-          busStopMarkers.push(busStopMarker);
-          distanceTraveled += busStopInterval * 1000;
-        }
-    
-      } else {
-        console.error("Polyline or getPath method is not available.");
-      }
-      */
-    } )
+        let busStop = new google.maps.Marker({
+          position: markerPosition,
+          map: map,
+          title: "first bus stop"
+        });
+
+        const distanceToMarker = google.maps.geometry.spherical.computeDistanceBetween(startLocation, markerPosition);
+        const closestPolylinePoint = google.maps.geometry.poly.isLocationOnEdge(markerPosition, path, 10e-2) ? markerPosition : path[google.maps.geometry.poly.computeDistanceBetween(markerPosition, path[0]) > google.maps.geometry.poly.computeDistanceBetween(markerPosition, path[path.length-1]) ? path[path.length-1] : path[0]];
+        marker.setPosition(closestPolylinePoint);
+
+    })
     
       //3. Should there be a mistakes, that makes the function unable to run,
       //an alert will pop up on the website
