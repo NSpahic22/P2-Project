@@ -12,7 +12,8 @@ function initMap () {
         zoom: 14,
         center: {lat:57.04, lng: 9.93},
     });
-      
+
+    //The button that turns traffic on and off  
     const Traffic = document.getElementById("Traffic");
     Traffic.addEventListener("click", () => {
         if (Traffic.checked === true) {
@@ -23,6 +24,7 @@ function initMap () {
         }
     });
 
+    //The button that turns the points of intrest on and off
     const pointsofintrest = document.getElementById("Pointsofintrest");
     pointsofintrest.addEventListener("click", () => {
         if (pointsofintrest.checked === true) {
@@ -36,22 +38,31 @@ function initMap () {
             }); 
         };
     });
+    //Hides different points of intrest that just cause flodder when sites first loads
+    map.setOptions({
+        styles: styles["hide"]
+    });
+    
+    //Makes the already existing routes.
+    const routea = new google.maps.Polyline({
+        path: route1,
+        geodesic: true,
+        strokeColor: "#0000FF",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        interpolate: true,
+    });
+    routea.setMap(map);
 
-    const flightPlanCoordinates = [
-        { lat: 37.772, lng: -122.214 },
-        { lat: 21.291, lng: -157.821 },
-        { lat: -18.142, lng: 178.431 },
-        { lat: -27.467, lng: 153.027 },
-      ];
-      const flightPath = new google.maps.Polyline({
-        path: flightPlanCoordinates,
+    const routeb = new google.maps.Polyline({
+        path: route2,
         geodesic: true,
         strokeColor: "#FF0000",
         strokeOpacity: 1.0,
         strokeWeight: 2,
-      });
-    
-      flightPath.setMap(map);
+        interpolate: true,
+    });
+    routeb.setMap(map);
     
     //Sets map onto our site 
     directionsRenderer.setMap(map);
@@ -65,10 +76,7 @@ function initMap () {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
 
-    //Hides different points of intrest that just cause flodder
-    map.setOptions({
-        styles: styles["hide"]
-    });
+    
 }   
 
 //Syles defines what is hidden on the map
