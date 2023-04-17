@@ -11,7 +11,7 @@ body {
 
 #routemakeinput {
     position: absolute;
-    top: 19%;
+    top: 21%;
     left: 1%;
     z-index: 5;
     text-align: left;
@@ -24,7 +24,7 @@ body {
 
 #extrastops {
     position: absolute;
-    top: 33%;
+    top: 37%;
     left: 1%;
     z-index: 5;
     text-align: start;
