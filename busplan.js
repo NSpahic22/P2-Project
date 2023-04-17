@@ -3,6 +3,7 @@ let outputarr = [];
 
 function passengersinput(){
     let weeklyavg = document.querySelector('input[name="weeklypassengers"]').value
+    let businterval = bustime(weeklyavg)+" minutes";
     let busstopradius = document.querySelector('input[name="busstopradius"]').value;
 
     let outputplace = document.getElementById("here!");
@@ -14,11 +15,13 @@ function passengersinput(){
     let outparr = [
         weeklyavg,
         busstopradius,
+        businterval
     ];
 
     let outputtext = [
         "Average weekly passengers: ",
-        "Radius of bus stops: "
+        "Radius of bus stops: ",
+        "Interval between buses: "
     ];
 
     outlist.id = "additional_outputs"
@@ -37,10 +40,25 @@ function passengersinput(){
     }
     }
     outputplace.append(outlist);
+    console.log(businterval);
 }   
 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
+}
+
+function bustime(q){
+    let interval=0;
+    if(q<=1000) {
+        interval = 60;
+    } else if(1000<q<=5000){
+        interval = 30;
+    } else if(5000<q<=10000){
+        interval = 15
+    } else if(10000<q){
+        interval = 5
+    }
+    return interval;
 }

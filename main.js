@@ -104,7 +104,6 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         optimizeWaypoints: true,
     })
     
-    
     //2. Creates the route
     .then((response) => {
         directionsRenderer.setDirections(response);
@@ -113,4 +112,8 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     //3. Should there be a mistakes, that makes the function unable to run,
     //an alert will pop up on the website
     .catch((e) => window.alert("Directions request failed due to failed input" + status));
+    
+    for(let i = 0; i<waypointarr.length; i++){
+        console.log()
+    }
 }
