@@ -1,3 +1,6 @@
+let drivingdistance=0;
+let totalDuration = 0;
+
 //This is function is called with our API key
 function initMap () {
     //Assigning google functions
@@ -102,11 +105,23 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         avoidHighways: true,
         waypoints: waypointarr,
         optimizeWaypoints: true,
+        unitSystem: google.maps.UnitSystem.METRIC
     })
     
-    //2. Creates the route
+    //2. Creates the route and calculates driving distance
     .then((response) => {
         directionsRenderer.setDirections(response);
+        const legs = response.routes[0].legs;
+            let totalDistance = 0;
+            for (let i = 0; i < legs.length; i++) {
+                totalDistance += legs[i].distance.value;
+            }
+            drivingdistance=totalDistance/1000;
+        
+
+        for (let i = 0; i < legs.length; i++) {
+            totalDuration += legs[i].duration.value;
+        }
     })
 
     //3. Should there be a mistakes, that makes the function unable to run,
@@ -117,3 +132,12 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         console.log()
     }
 }
+
+function callback(response, status) {
+    if (status == 'OK') {
+      var distance = response.rows[0].elements[0].distance.text;
+      console.log('Driving distance between ' + origin + ' and ' + destination + ': ' + distance);
+    } else {
+      console.log('Error: ' + status);
+    }
+  }
