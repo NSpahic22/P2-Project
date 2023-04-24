@@ -1,3 +1,6 @@
+let drivingdistance=0;
+let totalDuration = 0;
+
 //This is function is called with our API key
 function initMap () {
     //Assigning google functions
@@ -12,7 +15,8 @@ function initMap () {
         zoom: 14,
         center: {lat:57.04, lng: 9.93},
     });
-      
+
+    //The button that turns traffic on and off  
     const Traffic = document.getElementById("Traffic");
     Traffic.addEventListener("click", () => {
         if (Traffic.checked === true) {
@@ -23,6 +27,7 @@ function initMap () {
         }
     });
 
+    //The button that turns the points of intrest on and off
     const pointsofintrest = document.getElementById("Pointsofintrest");
     pointsofintrest.addEventListener("click", () => {
         if (pointsofintrest.checked === true) {
@@ -36,22 +41,31 @@ function initMap () {
             }); 
         };
     });
+    //Hides different points of intrest that just cause flodder when sites first loads
+    map.setOptions({
+        styles: styles["hide"]
+    });
+    
+    //Makes the already existing routes.
+    const routea = new google.maps.Polyline({
+        path: route1,
+        geodesic: true,
+        strokeColor: "#0000FF",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        interpolate: true,
+    });
+    routea.setMap(map);
 
-    const flightPlanCoordinates = [
-        { lat: 37.772, lng: -122.214 },
-        { lat: 21.291, lng: -157.821 },
-        { lat: -18.142, lng: 178.431 },
-        { lat: -27.467, lng: 153.027 },
-      ];
-      const flightPath = new google.maps.Polyline({
-        path: flightPlanCoordinates,
+    const routeb = new google.maps.Polyline({
+        path: route2,
         geodesic: true,
         strokeColor: "#FF0000",
         strokeOpacity: 1.0,
         strokeWeight: 2,
-      });
-    
-      flightPath.setMap(map);
+        interpolate: true,
+    });
+    routeb.setMap(map);
     
     //Sets map onto our site 
     directionsRenderer.setMap(map);
@@ -65,10 +79,7 @@ function initMap () {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
 
-    //Hides different points of intrest that just cause flodder
-    map.setOptions({
-        styles: styles["hide"]
-    });
+    
 }   
 
 //Syles defines what is hidden on the map
@@ -94,15 +105,39 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         avoidHighways: true,
         waypoints: waypointarr,
         optimizeWaypoints: true,
+        unitSystem: google.maps.UnitSystem.METRIC
     })
     
-    
-    //2. Creates the route
+    //2. Creates the route and calculates driving distance
     .then((response) => {
         directionsRenderer.setDirections(response);
+        const legs = response.routes[0].legs;
+            let totalDistance = 0;
+            for (let i = 0; i < legs.length; i++) {
+                totalDistance += legs[i].distance.value;
+            }
+            drivingdistance=totalDistance/1000;
+        
+
+        for (let i = 0; i < legs.length; i++) {
+            totalDuration += legs[i].duration.value;
+        }
     })
 
     //3. Should there be a mistakes, that makes the function unable to run,
     //an alert will pop up on the website
     .catch((e) => window.alert("Directions request failed due to failed input" + status));
+    
+    for(let i = 0; i<waypointarr.length; i++){
+        console.log()
+    }
 }
+
+function callback(response, status) {
+    if (status == 'OK') {
+      var distance = response.rows[0].elements[0].distance.text;
+      console.log('Driving distance between ' + origin + ' and ' + destination + ': ' + distance);
+    } else {
+      console.log('Error: ' + status);
+    }
+  }

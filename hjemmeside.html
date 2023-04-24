@@ -49,7 +49,7 @@
 
    <form id="avgpassengers">
       <fieldset id="avgpass" class="passengers"> <legend> <b>Other inputs</b> </legend>
-         <input type="text" name="weeklypassengers" id="passengertext" placeholder="Average weekly passengers">
+         <input type="text" name="weeklypassengers" id="passengertext" placeholder="Expected weekly passengers">
          <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
          <input type="button" name="passengersubmit" value="submit">
       </fieldset>
@@ -66,13 +66,15 @@
    src="/route_diversions.js"></script>
 
    <script
-   src="/passengers.js"></script>
+   src="/busplan.js"></script>
+
+   <script
+   src="/Routes.js"></script>
 
    <script 
    src="/main.js"></script>
 
    <script
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly"
-   async></script>
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly" async></script>
 </body>
 </html>
