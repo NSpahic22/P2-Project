@@ -3,15 +3,18 @@ let map;
 let startLocation = null;
 let endLocation = null;
 let waypts = [];
-let gmarkers = [];
+let markersArray = [];
+let distance = 1000;
 
- /*GetPointAtDistance = function(metres) {
-  if (metres == 0) return this.getPath().getAt(0);
+const randomCords = [{ lat: 57.04, lng: 9.93 }, { lat: 58, lng: 10 }];
+
+function GetPointAtDistance(metres) {
+  if (metres === 0) return this.getPath().getAt(0);
   if (metres < 0) return null;
   if (this.getPath().getLength() < 2) return null;
   let dist=0;
   let olddist=0;
-  for (var i=1; (i < this.getPath().getLength() && dist < metres); i++) {
+  for (let i=1; (i < this.getPath().getLength() && dist < metres); i++) {
     olddist = dist;
     dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i-1));
   }
@@ -23,19 +26,17 @@ let gmarkers = [];
   let m = (metres-olddist)/(dist-olddist);
   return new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
     //return google.maps.geometry.spherical.interpolate(p1,p2,m)
-} */
+}
 
-function createMarker(latlng, label) {
-      let marker = new google.maps.Marker({
-          position: latlng,
-          // draggable: true, 
-          map: map,
-          title: label,
-          zIndex: Math.round(latlng.lat()*-100000)<<5
-          });
-          gmarkers.push(marker);
-          return marker;
-  }
+
+function createMarker(map, latlng) {
+    let marker = new google.maps.Marker({
+      position: latlng,
+      map: map,
+    });
+    markersArray.push(marker)
+}
+
 
 function initMap() {
   const directionsRenderer = new google.maps.DirectionsRenderer();
@@ -49,9 +50,6 @@ function initMap() {
     calculateAndDisplayRoute(directionsService, directionsRenderer);
   });
 }
-
-
-
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
   //The google function which:
@@ -69,49 +67,25 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
   
   //2. Creates the route
   .then((response) => {
-      directionsRenderer.setDirections(response);
-      let route = response.routes[0];
-      let distance = 1000;
-      startLocation = new Object();
-      endLocation = new Object();
-      let polyline = new google.maps.Polyline({
-        path: route.getPath(),
+    directionsRenderer.setDirections(response);
+      
+      const polylineRoute = new google.maps.Polyline({
+        path: response.routes[0].overview_path,
+        geodesic: true,
         strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
       });
 
-      
-      let routeLegs = response.routes[0].legs[0];
-      
-      for (i=0;i<routeLegs.length;i++) {
-        if (i == 0) { 
-          startLocation.latlng = routeLegs[i].start_location;
-          startLocation.address = routeLegs[i].start_address;
-//            startLocation.marker = createMarker(legs[i].start_location,"start",legs[i].start_address,"green");
-        } else { 
-          waypts[i] = new Object();
-          waypts[i].latlng = routeLegs[i].start_location;
-          waypts[i].address = routeLegs[i].start_address;
-//            waypts[i].marker = createMarker(legs[i].start_location,"waypoint"+i,legs[i].start_address,"yellow");
-        }
-        endLocation.latlng = routeLegs[i].end_location;
-        endLocation.address = routeLegs[i].end_address;
-        let steps = routeLegs[i].steps;
-// alert("processing "+steps.length+" steps");
-        for (j=0;j<steps.length;j++) {
-          let nextSegment = steps[j].path;
-          for (k=0;k<nextSegment.length;k++) {
-            polyline.getPath().push(nextSegment[k]);
-            bounds.extend(nextSegment[k]);
-          }
-      }
-      console.log(endLocation.latlng);
-    } 
+      polylineRoute.setMap(map);
     
-      //createMarker(polyline.GetPointAtDistance(distance), "Bus stop");
-      createMarker(map.center, "Bus stop");
+      createMarker(map, polylineRoute.GetPointAtDistance(1000));
+      
   })
 
   //3. Should there be a mistakes, that makes the function unable to run,
   //an alert will pop up on the website
   .catch((e) => window.alert("Directions request failed due to failed input" + status));
 }
+
+
