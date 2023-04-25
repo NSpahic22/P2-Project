@@ -9,7 +9,10 @@ function passengersinput(){
     let outlist = document.createElement("div");
     let breaker = document.createElement("br");
     let stopandtime = timecalc(totalDuration, weeklyavg, drivingdistance, busstopradius, businterval);
-    let stops = stopandtime[0]; let drivetime = stopandtime[1] + 'h ' + stopandtime[2] + 'm ' + stopandtime[3] + 's';
+    let drivetime ='No route planned.'
+    if(stopandtime[1]>0||stopandtime[2]>0||stopandtime[3]>0){
+    drivetime = stopandtime[1] + 'h ' + stopandtime[2] + 'm ' + stopandtime[3] + 's'; }
+    stops = stopandtime[0];
     businterval+=" minutes";
     removeAllChildNodes(outputplace);
     outlist.innerHTML="";
@@ -69,8 +72,10 @@ function timecalc(totaltime, users, length, stopint, busamount){
         additionalminutes+=60;
     }
     console.log(totaltime);
-    totaltime+=additionalminutes;
+    if(totaltime>0){
+    totaltime+=additionalminutes; }
     console.log(totaltime);
+    
 
     const hours = Math.floor(totaltime / 3600);
     const minutes = Math.floor((totaltime - (hours * 3600)) / 60);
