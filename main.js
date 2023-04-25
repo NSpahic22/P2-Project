@@ -45,8 +45,9 @@ function initMap () {
     map.setOptions({
         styles: styles["hide"]
     });
-    
-    //Makes the already existing routes.
+    /*
+    //Makes the already existing routes. (HAS BEEN PUT ON PAUSED,
+    TO SEE IF BETTER ALTERNATIVE IS AVALIABLE)
     const routea = new google.maps.Polyline({
         path: route1,
         geodesic: true,
@@ -66,7 +67,8 @@ function initMap () {
         interpolate: true,
     });
     routeb.setMap(map);
-    
+    */
+
     //Sets map onto our site 
     directionsRenderer.setMap(map);
     transitLayer.setMap(map); 
@@ -102,6 +104,7 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         origin: document.getElementById("from").value,
         destination: document.getElementById("to").value,
         travelMode: 'DRIVING',
+        routingPreference: "TRAFFIC_AWARE",
         avoidHighways: true,
         waypoints: waypointarr,
         optimizeWaypoints: true,
