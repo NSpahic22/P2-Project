@@ -15,7 +15,6 @@ function initMap () {
         zoom: 14,
         center: {lat:57.04, lng: 9.93},
     });
-
     //The button that turns traffic on and off  
     const Traffic = document.getElementById("Traffic");
     Traffic.addEventListener("click", () => {
@@ -104,7 +103,6 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         origin: document.getElementById("from").value,
         destination: document.getElementById("to").value,
         travelMode: 'DRIVING',
-        routingPreference: "TRAFFIC_AWARE",
         avoidHighways: true,
         waypoints: waypointarr,
         optimizeWaypoints: true,
@@ -129,7 +127,7 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
 
     //3. Should there be a mistakes, that makes the function unable to run,
     //an alert will pop up on the website
-    .catch((e) => window.alert("Directions request failed due to failed input" + status));
+    .catch((event) => window.alert("Directions request failed due to failed input"));
     
     for(let i = 0; i<waypointarr.length; i++){
         console.log()
