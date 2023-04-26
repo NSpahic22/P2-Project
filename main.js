@@ -127,11 +127,7 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
 
     //3. Should there be a mistakes, that makes the function unable to run,
     //an alert will pop up on the website
-    .catch((event) => window.alert("Directions request failed due to failed input"));
-    
-    for(let i = 0; i<waypointarr.length; i++){
-        console.log()
-    }
+    .catch((Error) => window.alert(Error));
 }
 
 function callback(response, status) {
