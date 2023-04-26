@@ -1,6 +1,7 @@
 //Creates event listener for when user clicks the + button
 document.querySelector('input[value="+"]').addEventListener("click", appendinator);
 document.querySelector('input[name="Submit"]').addEventListener("click", morestops);
+//document.getElementById("mode").addEventListener("click", morestops);
 
 //Helps create unique ids for each address
 let inputcounter = 1;
@@ -30,13 +31,16 @@ function morestops(event, addressarr){
     //Emptying the array, so only the addresses that are displayed, will be made into a route
     waypointarr = [];
     //Taking the value, and making into readable locations for google api
+    
     for (element of waypointquery) {
-        if (element.value != null){
+        if (element.value != null && element.value != ""){
             waypointarr.push({
                 location: element.value,
                 stopover: true,
             })
         }
-        i++
+        
+        i++;
     }
+    console.log(waypointarr);
 }

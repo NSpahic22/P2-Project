@@ -1,136 +1,141 @@
-let distance = 1000;
-
-            google.maps.LatLng.prototype.distanceFrom = function(newLatLng) {
-                var EarthRadiusMeters = 6378137.0;
-                var lat1 = this.lat();
-                var lon1 = this.lng();
-                var lat2 = newLatLng.lat();
-                var lon2 = newLatLng.lng();
-                var dLat = (lat2-lat1) * Math.PI / 180;
-                var dLon = (lon2-lon1) * Math.PI / 180;
-                var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                    Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
-                    Math.sin(dLon/2) * Math.sin(dLon/2);
-                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-                var d = EarthRadiusMeters * c;
-                return d;
-            }
-
-<<<<<<< Updated upstream
-            google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {// Stolen from http://www.geocodezip.com/scripts/v3_epoly.js
-                if (metres == 0) return this.getPath().getAt(0);
-                if (metres < 0) return null;
-                if (this.getPath().getLength() < 2) return null;
-                var dist=0;
-                var olddist=0;
-                for (var i=1; (i < this.getPath().getLength() && dist < metres); i++) {
-                    olddist = dist;
-                    dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i-1));
-                }
-                if (dist < metres) {
-                    return null;
-                }
-                var p1= this.getPath().getAt(i-2);
-                var p2= this.getPath().getAt(i-1);
-                var m = (metres-olddist)/(dist-olddist);
-                return new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
-            }
-
-            function createMarker(map, latlng) {
-                let marker = new google.maps.Marker({
-                position: latlng,
-                 map: map,
-                });
-                markersArray.push(marker)
-            }
-            
-
-            const map = new google.maps.Map(document.getElementById("map"),{
-                zoom: 14,
-                center: { lat: 57.04, lng: 9.93 }
-            });
-=======
-distanceFrom = function(newLatLng) {
-  let EarthRadiusMeters = 6378137.0;
-  let lat1 = this.lat();
-  let lon1 = this.lng();
-  let lat2 = newLatLng.lat();
-  let lon2 = newLatLng.lng();
-  let dLat = (lat2-lat1) * Math.PI / 180;
-  let dLon = (lon2-lon1) * Math.PI / 180;
-  let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
-      Math.sin(dLon/2) * Math.sin(dLon/2);
-  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  let d = EarthRadiusMeters * c;
-  return d;
-}
-
-function GetPointAtDistance(metres) {
-  if (metres === 0) return this.getPath().getAt(0);
-  if (metres < 0) return null;
-  if (this.getPath().getLength() < 2) return null;
-  let dist=0;
-  let olddist=0;
-  for (let i=1; (i < this.getPath().getLength() && dist < metres); i++) {
-    olddist = dist;
-    dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i-1));
-  }
-  if (dist < metres) {
-    return null;
-  }
-  let p1= this.getPath().getAt(i-2);
-  let p2= this.getPath().getAt(i-1);
-  let m = (metres-olddist)/(dist-olddist);
-  return new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
-    //return google.maps.geometry.spherical.interpolate(p1,p2,m)
-}
-
-function createMarker(map, latlng) {
-    let marker = new google.maps.Marker({
-      position: latlng,
-      map: map,
+//This is function is called with our API key
+function initMap () {
+    //Assigning google functions
+    const directionsRenderer = new google.maps.DirectionsRenderer({
+        draggable: true,
     });
-    markersArray.push(marker)
-}
->>>>>>> Stashed changes
+    const directionsService = new google.maps.DirectionsService();
+    const transitLayer = new google.maps.TransitLayer();
+    const trafficLayer = new google.maps.TrafficLayer();
+    //Creates maps
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 14,
+        center: {lat:57.04, lng: 9.93},
+    });
+    //The button that turns traffic on and off  
+    const Traffic = document.getElementById("Traffic");
+    Traffic.addEventListener("click", () => {
+        if (Traffic.checked === true) {
+            trafficLayer.setMap(map);
+        }
+        else {
+            trafficLayer.setMap();
+        }
+    });
 
-            const directionsRenderer = new google.maps.DirectionsRenderer({preserveViewport: true});
-
-            directionsRenderer.setMap(map);
-
-            const directions = new google.maps.DirectionsService();
-
-            directions.route({
-                origin: "stolpedalsvej 61A",
-                destination: "kærby",
-                travelMode: "DRIVING",
-                avoidHighways: true,
-                waypoints: waypointarr,
-                optimizeWaypoints: true,
-            },(data) => {
-                const polyline = new google.maps.Polyline({
-                  strokeColor: "#FF0000",
-                });
-
-                var legs = data.routes[0].legs;
-                for (i=0;i<legs.length;i++) {
-                  var steps = legs[i].steps;
-                  for (j=0;j<steps.length;j++) {
-                    var nextSegment = steps[j].path;
-                    for (k=0;k<nextSegment.length;k++) {
-                      polyline.getPath().push(nextSegment[k]);
-                    }
-                  }
-                } 
-
-                polyline.setMap(map);
-
-                
-                //for (let i = 0; i*distance < /*add driving distance variable here*/; i++) {
-                  createMarker(map, polyline.GetPointAtDistance(distance));
-                //}
-                
-                map.setCenter(marker.getPosition());
-                directionsRenderer.setDirections(data);
+    //The button that turns the points of intrest on and off
+    const pointsofintrest = document.getElementById("Pointsofintrest");
+    pointsofintrest.addEventListener("click", () => {
+        if (pointsofintrest.checked === true) {
+            map.setOptions({
+                styles:styles["default"]
             });
+        }
+        else {
+            map.setOptions({
+                styles:styles["hide"]
+            }); 
+        };
+    });
+    //Hides different points of intrest that just cause flodder when sites first loads
+    map.setOptions({
+        styles: styles["hide"]
+    });
+    /*
+    //Makes the already existing routes. (HAS BEEN PUT ON PAUSED,
+    TO SEE IF BETTER ALTERNATIVE IS AVALIABLE)
+    const routea = new google.maps.Polyline({
+        path: route1,
+        geodesic: true,
+        strokeColor: "#0000FF",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        interpolate: true,
+    });
+    routea.setMap(map);
+
+    const routeb = new google.maps.Polyline({
+        path: route2,
+        geodesic: true,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        interpolate: true,
+    });
+    routeb.setMap(map);
+    */
+
+    //Sets map onto our site 
+    directionsRenderer.setMap(map);
+    transitLayer.setMap(map); 
+    
+    //Adds eventlistener to the submit button for the addresses
+    document.getElementById("mode").addEventListener("click", () => {
+        caluclateAndDisplayRoutes(directionsService, directionsRenderer);
+    });
+    document.getElementById("morestopbutton").addEventListener("click", () => {
+        caluclateAndDisplayRoutes(directionsService, directionsRenderer);
+    });
+
+    
+}   
+
+//Syles defines what is hidden on the map
+const styles = {
+    default: [],
+    hide: [
+        {
+            featureType:"poi",
+            stylers: [{ visibility: "off"}],  
+        },
+    ],
+};
+
+//Function called when user clicks submit
+function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
+    //The google function which:
+    //1. Fetches the route from the user, and sets the rules for creating the route
+    directionsService
+    .route({
+        origin: document.getElementById("from").value,
+        destination: document.getElementById("to").value,
+        travelMode: 'DRIVING',
+        avoidHighways: true,
+        waypoints: waypointarr,
+        optimizeWaypoints: true,
+        unitSystem: google.maps.UnitSystem.METRIC
+    })
+    
+    //2. Creates the route and calculates driving distance
+    .then((response) => {
+        directionsRenderer.setDirections(response);
+        const legs = response.routes[0].legs;
+            let totalDistance = 0;
+            for (let i = 0; i < legs.length; i++) {
+                totalDistance += legs[i].distance.value;
+            }
+            drivingdistance=totalDistance/1000;
+        
+
+        for (let i = 0; i < legs.length; i++) {
+            totalDuration += legs[i].duration.value;
+        }
+    })
+
+    //3. Should there be a mistakes, that makes the function unable to run,
+    //an alert will pop up on the website
+    .catch((event) => window.alert("Directions request failed due to failed input"));
+    
+    for(let i = 0; i<waypointarr.length; i++){
+        console.log()
+    }
+}
+
+function callback(response, status) {
+    if (status == 'OK') {
+      var distance = response.rows[0].elements[0].distance.text;
+      console.log('Driving distance between ' + origin + ' and ' + destination + ': ' + distance);
+    } else {
+      console.log('Error: ' + status);
+    }
+  }

@@ -11,25 +11,56 @@
 </head>
 <body>
 
+   <form id="options">
+      <fieldset> <legend> <b> Map display options </b> </legend>
 
-   
-      <form id="routemakeinput">
-         <fieldset> <legend> <b> Enter your route:  </b> </legend>
-            <input type="text" id="from" placeholder="Origin">
-               <br> 
-            <input type="text" id="to" placeholder="Destination">
-               <br>
-            <input type="button" value="Submit" id="mode">
-         </fieldset>
-      </form>
+         Traffic <br>
+         <label class="switch">
+            <input type="checkbox" value="Traffic" id="Traffic">
+            <span class="slider round"></span>
+         </label>
+         <br>
+      
+         Points of intrest <br>
+         <label class="switch">
+            <input type="checkbox" value="POI" id="Pointsofintrest">
+            <span class="slider round"></span>
+         </label>
+         
+      </fieldset>
+   </form>
 
-   <form id="myForm">
+   <form id="routemakeinput">
+      <fieldset> <legend> <b> Enter your route:  </b> </legend>
+         <input type="text" id="from" placeholder="Starting destination">
+            <br> 
+         <input type="text" id="to" placeholder="Ending destination">
+            <br>
+         <input type="button" value="Submit" id="mode">
+      </fieldset>
+   </form>
+
+   <form id="extrastops">
       <fieldset id="extraplaces" class="togleAble"> <legend> <b>Diversions</b> </legend>
-         <input type="button" name="Submit" value="Submit">
+         <input type="button" name="Submit" id="morestopbutton" value="Submit">
          <input type="button" name="addmore" value="+">
             <br>
-         <input type="text" name="diversion" placeholder="Input extra destination">
+         <input type="text" name="diversion" placeholder="Route addition">
             <br>
+      </fieldset>
+   </form>
+
+   <form id="avgpassengers">
+      <fieldset id="avgpass" class="passengers"> <legend> <b>Other inputs</b> </legend>
+         <input type="text" name="weeklypassengers" id="passengertext" placeholder="Expected weekly passengers">
+         <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
+         <input type="button" name="passengersubmit" value="submit">
+      </fieldset>
+   </form>
+
+   <form id="dataoutput">
+      <fieldset id="outputs" class="information"> <legend> <b> Outputs </b> </legend>
+         <div id="here!"></div>
       </fieldset>
    </form>
 
@@ -37,9 +68,16 @@
    <script 
    src="/route_diversions.js"></script>
 
+   <script
+   src="/busplan.js"></script>
+
+   <script
+   src="/Routes.js"></script>
+
    <script 
    src="/main.js"></script>
 
-   
+   <script
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly" async></script>
 </body>
 </html>
