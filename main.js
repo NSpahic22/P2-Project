@@ -16,6 +16,7 @@ let distance = 1000;
                 return d;
             }
 
+<<<<<<< Updated upstream
             google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {// Stolen from http://www.geocodezip.com/scripts/v3_epoly.js
                 if (metres == 0) return this.getPath().getAt(0);
                 if (metres < 0) return null;
@@ -48,6 +49,51 @@ let distance = 1000;
                 zoom: 14,
                 center: { lat: 57.04, lng: 9.93 }
             });
+=======
+distanceFrom = function(newLatLng) {
+  let EarthRadiusMeters = 6378137.0;
+  let lat1 = this.lat();
+  let lon1 = this.lng();
+  let lat2 = newLatLng.lat();
+  let lon2 = newLatLng.lng();
+  let dLat = (lat2-lat1) * Math.PI / 180;
+  let dLon = (lon2-lon1) * Math.PI / 180;
+  let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  let d = EarthRadiusMeters * c;
+  return d;
+}
+
+function GetPointAtDistance(metres) {
+  if (metres === 0) return this.getPath().getAt(0);
+  if (metres < 0) return null;
+  if (this.getPath().getLength() < 2) return null;
+  let dist=0;
+  let olddist=0;
+  for (let i=1; (i < this.getPath().getLength() && dist < metres); i++) {
+    olddist = dist;
+    dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i-1));
+  }
+  if (dist < metres) {
+    return null;
+  }
+  let p1= this.getPath().getAt(i-2);
+  let p2= this.getPath().getAt(i-1);
+  let m = (metres-olddist)/(dist-olddist);
+  return new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
+    //return google.maps.geometry.spherical.interpolate(p1,p2,m)
+}
+
+function createMarker(map, latlng) {
+    let marker = new google.maps.Marker({
+      position: latlng,
+      map: map,
+    });
+    markersArray.push(marker)
+}
+>>>>>>> Stashed changes
 
             const directionsRenderer = new google.maps.DirectionsRenderer({preserveViewport: true});
 
