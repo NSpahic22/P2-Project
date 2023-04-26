@@ -1,6 +1,3 @@
-let drivingdistance=0;
-let totalDuration = 0;
-
 //This is function is called with our API key
 function initMap () {
     //Assigning google functions
