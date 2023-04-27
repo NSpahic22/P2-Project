@@ -1,3 +1,15 @@
+// Global variables needed for busstops
+let directionDisplay;
+let directionsService = new google.maps.DirectionsService();
+let map;
+let polyline = null;
+let gmarkers = [];
+let infowindow = new google.maps.InfoWindow();
+let markerIcons = new Array();
+markerIcons["red"] = {
+  url: "http://maps.google.com/mapfiles/ms/micons/red.png"
+};
+
 //This is function is called with our API key
 function initMap () {
     //Assigning google functions
@@ -77,6 +89,9 @@ function initMap () {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
 
+    //calculateAndDisplayRoute(directionsService, directionsDisplay);
+    
+
     
 }   
 
@@ -92,44 +107,98 @@ const styles = {
 };
 
 //Function called when user clicks submit
-function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
-    //The google function which:
-    //1. Fetches the route from the user, and sets the rules for creating the route
-    directionsService
-    .route({
-        origin: document.getElementById("from").value,
-        destination: document.getElementById("to").value,
-        travelMode: 'DRIVING',
-        avoidHighways: true,
-        waypoints: waypointarr,
-        optimizeWaypoints: true,
-        unitSystem: google.maps.UnitSystem.METRIC
-    })
-    
-    //2. Creates the route and calculates driving distance
-    .then((response) => {
-        directionsRenderer.setDirections(response);
-        const legs = response.routes[0].legs;
-            let totalDistance = 0;
-            for (let i = 0; i < legs.length; i++) {
-                totalDistance += legs[i].distance.value;
-            }
-            drivingdistance=totalDistance/1000;
+function caluclateAndDisplayRoutes(directionsService, directionsDisplay) {
+    directionsService.route({
+      origin: document.getElementById("from").value,
+      destination: document.getElementById("to").value,
+      travelMode: 'DRIVING',
+      avoidHighways: true,
+      waypoints: waypointarr,
+      optimizeWaypoints: true,
+      unitSystem: google.maps.UnitSystem.METRIC
+  }, function(response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
         
+        let bounds = new google.maps.LatLngBounds();
+        startLocation = new Object();
+        endLocation = new Object();
+  
+        directionsDisplay.setDirections(response);
+  
+        let route = response.routes[0];
+        // For each route, display summary information.
+        let path = response.routes[0].overview_path;
+        let legs = response.routes[0].legs;
 
+        for (i=0;i<legs.length;i++) {
+            var steps = legs[i].steps;
+            for (j=0;j<steps.length;j++) {
+              var nextSegment = steps[j].path;
+              for (k=0;k<nextSegment.length;k++) {
+                polyline.getPath().push(nextSegment[k]);
+              }
+            }
+          } 
+  
+        let totalDistance = 0;
         for (let i = 0; i < legs.length; i++) {
-            totalDuration += legs[i].duration.value;
+            totalDistance += legs[i].distance.value;
         }
-    })
+        drivingdistance=totalDistance/1000;
+        for (let i = 0; i < legs.length; i++) {
+        totalDuration += legs[i].duration.value;
+        }
+  
+        for (i = 0; i < legs.length; i++) {
+          if (i == 0) {
+            startLocation.latlng = legs[i].start_location;
+            startLocation.address = legs[i].start_address;
+            // marker = google.maps.Marker({map:map,position: startLocation.latlng});
+            marker = createMarker(legs[i].start_location, "start", legs[i].start_address, "green");
+          }
+          endLocation.latlng = legs[i].end_location;
+          endLocation.address = legs[i].end_address;
+          let steps = legs[i].steps;
+          for (j = 0; j < steps.length; j++) {
+            let nextSegment = steps[j].path;
+            for (k = 0; k < nextSegment.length; k++) {
+              polyline.getPath().push(nextSegment[k]);
+              bounds.extend(nextSegment[k]);
+            }
+          }
+        }
+  
+        polyline.setMap(map);
+        for (let i = 0; i < gmarkers.length; i++) {
+          gmarkers[i].setMap(null);
+        }
+        gmarkers = [];
+        let points = polyline.GetPointsAtDistance(1000);
+        for (let i = 0; i < points.length; i++) {
+          let marker = new google.maps.Marker({
+            map: map,
+            position: points[i],
+            title: i + 1 + " km"
+          });
+          marker.addListener('click', openInfoWindow);
+        }
+  
+      } else {
+        alert("directions response " + status);
+      }
+    });
+  
+  
+    /*  function(response, status) {
+        if (status === 'OK') {
+          directionsDisplay.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      }); */
+  }
 
-    //3. Should there be a mistakes, that makes the function unable to run,
-    //an alert will pop up on the website
-    .catch((event) => window.alert("Directions request failed due to failed input"));
-    
-    for(let i = 0; i<waypointarr.length; i++){
-        console.log()
-    }
-}
+  google.maps.event.addDomListener(window, 'load', initMap);
 
 function callback(response, status) {
     if (status == 'OK') {
