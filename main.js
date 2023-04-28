@@ -1,6 +1,6 @@
 // Global variables needed for busstops
 let directionDisplay;
-let directionsService = new google.maps.DirectionsService();
+let directionsService;
 let map;
 let polyline = null;
 let gmarkers = [];
@@ -9,6 +9,8 @@ let markerIcons = new Array();
 markerIcons["red"] = {
   url: "http://maps.google.com/mapfiles/ms/micons/red.png"
 };
+
+let totalDuration;
 
 //This is function is called with our API key
 function initMap () {
@@ -53,6 +55,30 @@ function initMap () {
     map.setOptions({
         styles: styles["hide"]
     });
+
+    // === A method which returns an array of GLatLngs of points a given interval along the path ===
+google.maps.Polyline.prototype.GetPointsAtDistance = function(metres) {
+  let next = metres;
+  let points = [];
+  // some awkward special cases
+  if (metres <= 0) return points;
+  let dist = 0;
+  let olddist = 0;
+  for (let i = 1;
+    (i < this.getPath().getLength()); i++) {
+    olddist = dist;
+    dist += google.maps.geometry.spherical.computeDistanceBetween(this.getPath().getAt(i), this.getPath().getAt(i - 1));
+    while (dist > next) {
+      let p1 = this.getPath().getAt(i - 1);
+      let p2 = this.getPath().getAt(i);
+      let m = (next - olddist) / (dist - olddist);
+      points.push(new google.maps.LatLng(p1.lat() + (p2.lat() - p1.lat()) * m, p1.lng() + (p2.lng() - p1.lng()) * m));
+      next += metres;
+    }
+  }
+  return points;
+}
+
     /*
     //Makes the already existing routes. (HAS BEEN PUT ON PAUSED,
     TO SEE IF BETTER ALTERNATIVE IS AVALIABLE)
@@ -92,7 +118,6 @@ function initMap () {
     //calculateAndDisplayRoute(directionsService, directionsDisplay);
     
 
-    
 }   
 
 //Syles defines what is hidden on the map
@@ -118,6 +143,10 @@ function caluclateAndDisplayRoutes(directionsService, directionsDisplay) {
       unitSystem: google.maps.UnitSystem.METRIC
   }, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
+
+        const polyline = new google.maps.Polyline({
+          path: response.routes[0].overview_path
+      });
         
         let bounds = new google.maps.LatLngBounds();
         startLocation = new Object();
@@ -130,7 +159,7 @@ function caluclateAndDisplayRoutes(directionsService, directionsDisplay) {
         let path = response.routes[0].overview_path;
         let legs = response.routes[0].legs;
 
-        for (i=0;i<legs.length;i++) {
+        /*for (i=0;i<legs.length;i++) {
             var steps = legs[i].steps;
             for (j=0;j<steps.length;j++) {
               var nextSegment = steps[j].path;
@@ -138,7 +167,7 @@ function caluclateAndDisplayRoutes(directionsService, directionsDisplay) {
                 polyline.getPath().push(nextSegment[k]);
               }
             }
-          } 
+          } */
   
         let totalDistance = 0;
         for (let i = 0; i < legs.length; i++) {

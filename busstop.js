@@ -41,25 +41,3 @@ function openInfoWindow() {
   infowindow.open(map, this);
 }
 
-// === A method which returns an array of GLatLngs of points a given interval along the path ===
-google.maps.Polyline.prototype.GetPointsAtDistance = function(metres) {
-  let next = metres;
-  let points = [];
-  // some awkward special cases
-  if (metres <= 0) return points;
-  let dist = 0;
-  let olddist = 0;
-  for (let i = 1;
-    (i < this.getPath().getLength()); i++) {
-    olddist = dist;
-    dist += google.maps.geometry.spherical.computeDistanceBetween(this.getPath().getAt(i), this.getPath().getAt(i - 1));
-    while (dist > next) {
-      let p1 = this.getPath().getAt(i - 1);
-      let p2 = this.getPath().getAt(i);
-      let m = (next - olddist) / (dist - olddist);
-      points.push(new google.maps.LatLng(p1.lat() + (p2.lat() - p1.lat()) * m, p1.lng() + (p2.lng() - p1.lng()) * m));
-      next += metres;
-    }
-  }
-  return points;
-}
