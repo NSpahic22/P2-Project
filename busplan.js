@@ -9,6 +9,10 @@ function passengersinput(){
     let outlist = document.createElement("div");
     let breaker = document.createElement("br");
     let stopandtime = timecalc(totalDuration, weeklyavg, drivingdistance, busstopradius, businterval);
+    let effeciency = "No route planned"
+    if(effcalc(totalDuration, weeklyavg, drivingdistance, stopandtime[0], businterval)!=NaN){
+        effeciency = effcalc(totalDuration, weeklyavg, drivingdistance, stopandtime[0], businterval)+" enh"
+    }
     let drivetime ='No route planned.'
     if(stopandtime[1]>0||stopandtime[2]>0||stopandtime[3]>0){
     drivetime = stopandtime[1] + 'h ' + stopandtime[2] + 'm ' + stopandtime[3] + 's'; }
@@ -23,7 +27,8 @@ function passengersinput(){
         weeklyavg,
         busstopradius,
         stops,
-        businterval
+        businterval,
+        effeciency
     ];
 
     let outputtext = [
@@ -32,7 +37,8 @@ function passengersinput(){
         "Average weekly passengers: ",
         "Radius of bus stops: ",
         "Amount of bus stops on route: ",
-        "Interval between buses: "
+        "Interval between buses: ",
+        "effeciency score of the route: "
     ];
 
     outlist.id = "additional_outputs"
@@ -60,6 +66,12 @@ function moreelements(q, arr){
         }
     }
     return moreelementsinlist;
+}
+
+
+function effcalc(totaltime, users, length, stopint, busamount) {
+    if(stopint>length) {stopint=1};
+    return Math.floor(((totaltime/users)+((totaltime/busamount)/stopint+((users/stopint)*(busamount/users)))*length))
 }
 
 function timecalc(totaltime, users, length, stopint, busamount){
