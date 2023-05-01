@@ -10,55 +10,56 @@
    src="https://maps.googleapis.com/maps/api/js?v=weekly&key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=places,geometry">
    </script>
 </head>
+
 <body>
 
-      <form id="options">
-         <fieldset> <legend> <b>  </b> </legend>
-
-            Traffic <br>
+<li class="link">
+   <div class="dropdown">
+      Optional
+      <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+   </div>
+   <ul class="submenuItems">
+      <form id="options">  
+         <fieldset>
             <label class="switch">
                <input type="checkbox" value="Traffic" id="Traffic">
                <span class="slider round"></span>
             </label>
-            <br>
-         
-            Points of intrest <br>
+               <br> Points of intrest <br>
             <label class="switch">
                <input type="checkbox" value="POI" id="Pointsofintrest">
                <span class="slider round"></span>
             </label>
-
          </fieldset>
       </form>
-         </ul>
-         </li>
-      <li class="link">
-         <div class="dropdown">
-            Route Maker
-            <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
-         </div>
-         <ul class="submenuItems">
-            <!--Indsat her-->
+   </ul>
+</li>
+         
+<li class="link">
+   <div class="dropdown">
+      Route Maker
+      <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+   </div>
+   <ul class="submenuItems">
+      <!--Indsat her-->
+      <form id="routemakeinput">
+         <fieldset> <legend> <b>   </b> </legend>
+            <input type="text" id="from" placeholder="Starting destination">
+               <br> 
+            <input type="text" id="to" placeholder="Ending destination">
+               <br>
+            <input type="button" value="Submit" id="mode">
+         </fieldset>
+      </form>      
+   </ul>
+</li>
 
-            <form id="routemakeinput">
-               <fieldset> <legend> <b>   </b> </legend>
-                  <input type="text" id="from" placeholder="Starting destination">
-                     <br> 
-                  <input type="text" id="to" placeholder="Ending destination">
-                     <br>
-                  <input type="button" value="Submit" id="mode">
-               </fieldset>
-            </form>      
-         </ul>
-      </li>
-      <li class="link">
-         <div class="dropdown">
-            Diversions
-            <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
-         </div>
-         <ul class="submenuItems">
-<!--Indsat her-->
-
+<li class="link">
+   <div class="dropdown">
+      Diversions
+      <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+   </div>
+   <ul class="submenuItems">
       <form id="extrastops">
          <fieldset id="extraplaces" class="togleAble"> 
             <legend> <b></b> </legend>
@@ -69,29 +70,32 @@
                <br>
          </fieldset>
       </form>
-         </ul>
-      </li>
-      <li class="link">
-         <div class="dropdown">
-            Route Details
-            <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
-         </div>
-         <ul class="submenuItems">
+   </ul>
+</li>   
+
+<li class="link">
+   <div class="dropdown">
+      Route Details
+      <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+   </div>
+   <ul class="submenuItems">
+      <form id="avgpassengers">
+         <fieldset id="avgpass" class="passengers"> <legend> <b>Other inputs</b> </legend>
+            <input type="text" name="weeklypassengers" id="passengertext" placeholder="Average weekly passengers">
+            <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
+            <input type="button" name="passengersubmit" value="submit">
+         </fieldset>
+      </form>
+   
+      <form id="dataoutput">
+         <fieldset id="outputs" class="information"> <legend> <b> Outputs </b> </legend>
+            <div id="here!"></div>
+         </fieldset>
+      </form>
+   
+   </ul>
+</li>   
 <!--Indsat her-->
-
-   <form id="avgpassengers">
-      <fieldset id="avgpass" class="passengers"> <legend> <b>Other inputs</b> </legend>
-         <input type="text" name="weeklypassengers" id="passengertext" placeholder="Average weekly passengers">
-         <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
-         <input type="button" name="passengersubmit" value="submit">
-      </fieldset>
-   </form>
-
-   <form id="dataoutput">
-      <fieldset id="outputs" class="information"> <legend> <b> Outputs </b> </legend>
-         <div id="here!"></div>
-      </fieldset>
-   </form>
 
    <div id="map"></div>
    <script 

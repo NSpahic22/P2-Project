@@ -139,7 +139,6 @@ function callback(response, status) {
     }
   }
 
-}
 // Basically så giver den alle link en active toggle når man trykker på den 
 let ListElements = document.querySelectorAll('.link');
 
