@@ -1,143 +1,177 @@
-#map {
-    height: 100%;
-}
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css");
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
 
-html,
-body {
-    height: 100%;
+  * {
     margin: 0;
     padding: 0;
-}
-
-#routemakeinput {
-    position: absolute;
-    top: 21%;
-    left: 1%;
-    z-index: 5;
-    text-align: left;
-    font-family: system-ui, -apple-system, 
-        BlinkMacSystemFont, 'Segoe UI', 
-        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 
-        sans-serif;
-    line-height: 150%;    
-}
-
-#extrastops {
-    position: absolute;
-    top: 37%;
-    left: 1%;
-    z-index: 5;
-    text-align: start;
-    font-family: system-ui, -apple-system, 
-        BlinkMacSystemFont, 'Segoe UI', 
-        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 
-        sans-serif;
-    line-height: 150%;
-    padding-left: 0px;    
-}
-
-#avgpassengers {
-    position: absolute;
-    top: 7%;
-    left: 85.2%;
-    z-index: 5;
-    text-align: start;
-    font-family: system-ui, -apple-system, 
-        BlinkMacSystemFont, 'Segoe UI', 
-        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 
-        sans-serif;
-    line-height: 150%;
-    padding-left: 0%;    
-}
-
-#outputs {
-  position: absolute;
-  top: 24%;
-  left: 85.2%;
-  z-index: 5;
-  text-align: start;
-  font-family: system-ui, -apple-system, 
-      BlinkMacSystemFont, 'Segoe UI', 
-      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 
-      sans-serif;
-  line-height: 100%;
-  padding-left: 0%;    
-}
-
-#options {
-    position: absolute;
-    top: 7%;
-    left: 1%;
-    z-index: 5;
-    text-align: center;
-    font-family: system-ui, -apple-system, 
-        BlinkMacSystemFont, 'Segoe UI', 
-        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 
-        sans-serif;
-    line-height: 100%;
-    padding-left: 0%;    
-}
-
-fieldset {
-    margin: 10px;
-    padding: 0 10px 10px;
-    border: 1px solid #00ffff00;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #666;
-    padding-top: 10px;
-    backdrop-filter: blur(5px);
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
   }
 
-  .switch {
+  #map {
+      height: 100%;
+  }
+
+  html,
+  body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+  }
+
+  ul {
+    list-style: none;
+  }
+  
+/*This is new*/
+  .submenuItems {
     position: relative;
-    display: inline-block;
-    width: 27.5%;
-    height: 20%;
+    top: 10%;
+    left: 10%;
+    z-index: 9999;
   }
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  .slider {
+
+  /*Starten af dropdown boxen*/
+  .accordion-menu {
     position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+    top: 1%;
+    left: 1%;
+    z-index: 50;
+    line-height: 30px;
+    max-width: 164px;
+    margin: 60px auto 20px;
+    background: #ffffff;
+    border-radius: 2px;
+    overflow: hidden;
   }
-  .slider:before {
+
+  .accordion-menu li:last-child .dropdown{
+    border-bottom: 0;
+  }
+
+  .accordion-menu li.active .dropbox{
+    color: #fff;
+  }
+/*Det her virker ikke rn*/
+  .accordion-menu li.active .dropbox .fa-chevron-down{
+    transform: rotate(180);
+  }
+/*Herfra virker det igen*/
+  .dropdown{
+    cursor: painter;
+    display: block;
+    /*15 15 15 45*/
+    padding: 10px 10px 10px 10px;
+    font-size: 18px;
+    border-bottom: 2px solid #ffffff;
+    color: #999;
+    position: relative;
+    transition: all 0.4s ease-out;
+  }
+
+  .dropdown:hover{
+    background: #ebebeb;
+    background: -webkit-linear-gradient(0% 0%, 0% 100%, from(#27455c), to from(#273a47));
+  }
+
+  .dropdown i{
     position: absolute;
-    content: "";
-    height: 70%;
-    width: 27%;
-    left: 7%;
-    bottom: 16%  ;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }  
+    top: 17px;
+    left: 16px;
+  }
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
+  /*chevron delen virker ikke endnu*/
+  .dropdown .fa-chevron-down{
+    right: 12px;
+    left: auto;
+    transition: transform 0.2s ease-in-out;
+  }
+  /*Har ikke nogen subitems levels*/
+  .submenuItems{
+    display: none;
+    background: #ffffff;
+  }
 
-.slider.round {
-  border-radius: 34px;
-}
+  .accordion-menu li.activate .submenuItems{
+    display: block;
+  }
 
-.slider.round:before {
-  border-radius: 50%;
-}
+  .submenuItems a{
+    display: block;
+    color: #66b2ff;
+    font-weight: 600;
+    padding: 12px 12px 12px 45px;
+    transition: all 0.2s ease-out;
+    text-decoration: none;
+  }
+
+  .submenuItems a:hover{
+    background: #5c7185;
+    color: #fff;
+  }
+
+  /*slutningen af dropdown*/
+
+  fieldset {
+      margin: 10px;
+      padding: 0 10px 10px;
+      border: 1px solid #00ffff00;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #666;
+      padding-top: 10px;
+      backdrop-filter: blur(5px);
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 27.5%;
+      height: 20%;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 70%;
+      width: 27%;
+      left: 7%;
+      bottom: 16%  ;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }  
+
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }

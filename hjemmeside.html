@@ -1,78 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <title>
-      Route-maker
-   </title>
-   <link rel="stylesheet" type="text/css" href="/style.css" />
-</head>
-<body>
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <title>
+         Route-maker
+      </title>
+      <link rel="stylesheet" type="text/css" href="/style.css" />
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+   </head>
+   <body>
+   <div class="container">
+      <ul class="accordion-menu">
+         <li class="link">
+            <div class="dropdown">
+               Map Display Options
+               <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+         </div>
+         <ul class="submenuItems">
+<!--Indsæt her-->
 
-   <form id="options">
-      <fieldset> <legend> <b> Map display options </b> </legend>
+      <form id="options">
+         <fieldset> <legend> <b>  </b> </legend>
 
-         Traffic <br>
-         <label class="switch">
-            <input type="checkbox" value="Traffic" id="Traffic">
-            <span class="slider round"></span>
-         </label>
-         <br>
-      
-         Points of intrest <br>
-         <label class="switch">
-            <input type="checkbox" value="POI" id="Pointsofintrest">
-            <span class="slider round"></span>
-         </label>
+            Traffic <br>
+            <label class="switch">
+               <input type="checkbox" value="Traffic" id="Traffic">
+               <span class="slider round"></span>
+            </label>
+            <br>
          
-      </fieldset>
-   </form>
+            Points of intrest <br>
+            <label class="switch">
+               <input type="checkbox" value="POI" id="Pointsofintrest">
+               <span class="slider round"></span>
+            </label>
 
-   <form id="routemakeinput">
-      <fieldset> <legend> <b> Enter your route:  </b> </legend>
-         <input type="text" id="from" placeholder="Starting destination">
-            <br> 
-         <input type="text" id="to" placeholder="Ending destination">
-            <br>
-         <input type="button" value="Submit" id="mode">
-      </fieldset>
-   </form>
+         </fieldset>
+      </form>
+         </ul>
+         </li>
+      <li class="link">
+         <div class="dropdown">
+            Route Maker
+            <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+         </div>
+         <ul class="submenuItems">
+            <!--Indsat her-->
 
-   <form id="extrastops">
-      <fieldset id="extraplaces" class="togleAble"> <legend> <b>Diversions</b> </legend>
-         <input type="button" name="Submit" id="morestopbutton" value="Submit">
-         <input type="button" name="addmore" value="+">
-            <br>
-         <input type="text" name="diversion" placeholder="Route addition">
-            <br>
-      </fieldset>
-   </form>
+            <form id="routemakeinput">
+               <fieldset> <legend> <b>   </b> </legend>
+                  <input type="text" id="from" placeholder="Starting destination">
+                     <br> 
+                  <input type="text" id="to" placeholder="Ending destination">
+                     <br>
+                  <input type="button" value="Submit" id="mode">
+               </fieldset>
+            </form>      
+         </ul>
+      </li>
+      <li class="link">
+         <div class="dropdown">
+            Diversions
+            <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+         </div>
+         <ul class="submenuItems">
+<!--Indsat her-->
 
-   <form id="avgpassengers">
-      <fieldset id="avgpass" class="passengers"> <legend> <b>Other inputs</b> </legend>
-         <input type="text" name="weeklypassengers" id="passengertext" placeholder="Average weekly passengers">
-         <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
-         <input type="button" name="passengersubmit" value="submit">
-      </fieldset>
-   </form>
+      <form id="extrastops">
+         <fieldset id="extraplaces" class="togleAble"> 
+            <legend> <b></b> </legend>
+            <input type="button" name="Submit" id="morestopbutton" value="Submit">
+            <input type="button" name="addmore" value="+">
+               <br>
+            <input type="text" name="diversion" placeholder="Route addition">
+               <br>
+         </fieldset>
+      </form>
+         </ul>
+      </li>
+      <li class="link">
+         <div class="dropdown">
+            Route Details
+            <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+         </div>
+         <ul class="submenuItems">
+<!--Indsat her-->
 
-   <form id="dataoutput">
-      <fieldset id="outputs" class="information"> <legend> <b> Outputs </b> </legend>
-         <div id="here!"></div>
-      </fieldset>
-   </form>
+            <form id="avgpassengers">
+               <fieldset id="avgpass" class="passengers"> 
+                  <legend> <b> </b> </legend>
+                  <input type="text" name="weeklypassengers" id="passengertext" placeholder="Average weekly passengers">
+                  <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
+                  <input type="button" name="passengersubmit" value="submit">
+               </fieldset>
+            </form>
+            <form id="dataoutput">
+               <fieldset id="outputs" class="information"> 
+                  <legend> <b>  </b> </legend>
+                  <div id="here!"></div>
+               </fieldset>
+            </form>
+            </ul>
+         </ul>
+      </li>
+   </div>
+      <div id="map"></div>
+      <script 
+      src="/route_diversions.js"></script>
 
-   <div id="map"></div>
-   <script 
-   src="/route_diversions.js"></script>
+      <script
+      src="/passengers.js"></script>
 
-   <script
-   src="/passengers.js"></script>
+      <script 
+      src="/main.js"></script>
 
-   <script 
-   src="/main.js"></script>
-
-   <script
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly"
-   async></script>
-</body>
-</html>
+      <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly"
+      async></script>
+   </body>
+   </html>
