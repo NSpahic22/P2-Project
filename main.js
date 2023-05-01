@@ -42,29 +42,6 @@ function initMap () {
     map.setOptions({
         styles: styles["hide"]
     });
-    /*
-    //Makes the already existing routes. (HAS BEEN PUT ON PAUSED,
-    TO SEE IF BETTER ALTERNATIVE IS AVALIABLE)
-    const routea = new google.maps.Polyline({
-        path: route1,
-        geodesic: true,
-        strokeColor: "#0000FF",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        interpolate: true,
-    });
-    routea.setMap(map);
-
-    const routeb = new google.maps.Polyline({
-        path: route2,
-        geodesic: true,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        interpolate: true,
-    });
-    routeb.setMap(map);
-    */
 
     //Sets map onto our site 
     directionsRenderer.setMap(map);
@@ -125,7 +102,7 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
 
     //3. Should there be a mistakes, that makes the function unable to run,
     //an alert will pop up on the website
-    .catch((event) => window.alert("Directions request failed due to failed input"));
+    .catch((e) => window.alert("Directions request failed due to failed input"));
     
     for(let i = 0; i<waypointarr.length; i++){
         console.log()
