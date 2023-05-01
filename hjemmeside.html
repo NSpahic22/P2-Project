@@ -4,33 +4,35 @@
    <title>
       Route-maker
    </title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
    <link rel="stylesheet" type="text/css" href="/style.css" />
-   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+   
+  
    <script async
    src="https://maps.googleapis.com/maps/api/js?v=weekly&key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=places,geometry">
    </script>
 </head>
 
 <body>
-
+<ul class="accordion-menu">
 <li class="link">
    <div class="dropdown">
+      <i class="fa fa-chevron-down"></i>
       Optional
-      <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
    </div>
    <ul class="submenuItems">
       <form id="options">  
-         <fieldset>
+         Traffic <br>
             <label class="switch">
                <input type="checkbox" value="Traffic" id="Traffic">
                <span class="slider round"></span>
             </label>
-               <br> Points of intrest <br>
+               <br> Points of interest <br>
             <label class="switch">
                <input type="checkbox" value="POI" id="Pointsofintrest">
                <span class="slider round"></span>
             </label>
-         </fieldset>
+        <br>
       </form>
    </ul>
 </li>
@@ -38,18 +40,17 @@
 <li class="link">
    <div class="dropdown">
       Route Maker
-      <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+      <i class="fa fa-chevron-down" aria-hidden="true"></i>
    </div>
    <ul class="submenuItems">
       <!--Indsat her-->
       <form id="routemakeinput">
-         <fieldset> <legend> <b>   </b> </legend>
             <input type="text" id="from" placeholder="Starting destination">
                <br> 
             <input type="text" id="to" placeholder="Ending destination">
                <br>
             <input type="button" value="Submit" id="mode">
-         </fieldset>
+
       </form>      
    </ul>
 </li>
@@ -57,18 +58,16 @@
 <li class="link">
    <div class="dropdown">
       Diversions
-      <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+      <i class="fa fa-chevron-down" aria-hidden="true"></i>
    </div>
    <ul class="submenuItems">
-      <form id="extrastops">
-         <fieldset id="extraplaces" class="togleAble"> 
+      <form id="extraplaces"> 
             <legend> <b></b> </legend>
             <input type="button" name="Submit" id="morestopbutton" value="Submit">
             <input type="button" name="addmore" value="+">
                <br>
             <input type="text" name="diversion" placeholder="Route addition">
                <br>
-         </fieldset>
       </form>
    </ul>
 </li>   
@@ -76,28 +75,28 @@
 <li class="link">
    <div class="dropdown">
       Route Details
-      <i class="fa-regular fa-chevron-down" aria-hidden="true"></i>
+      <i class="fa fa-chevron-down" aria-hidden="true"></i>
    </div>
    <ul class="submenuItems">
-      <form id="avgpassengers">
-         <fieldset id="avgpass" class="passengers"> <legend> <b>Other inputs</b> </legend>
+      <form id="avgpass">
             <input type="text" name="weeklypassengers" id="passengertext" placeholder="Average weekly passengers">
             <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
             <input type="button" name="passengersubmit" value="submit">
-         </fieldset>
       </form>
-   
-      <form id="dataoutput">
-         <fieldset id="outputs" class="information"> <legend> <b> Outputs </b> </legend>
-            <div id="here!"></div>
-         </fieldset>
-      </form>
-   
+         <div>
+            <b>Outputs</b>
+         </div>
+         <form id="outputs">
+            <div id="here!" placeholder="Outputs"></div>
+         </form>  
    </ul>
-</li>   
-<!--Indsat her-->
-
-   <div id="map"></div>
+</li>
+<li class="link">
+   
+    
+</li>
+</ul>   
+<div id="map"></div>
    <script 
    src="/route_diversions.js"></script>
 

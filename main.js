@@ -37,6 +37,7 @@ function initMap () {
             }); 
         };
     });
+    
     //Hides different points of intrest that just cause flodder when sites first loads
     map.setOptions({
         styles: styles["hide"]
