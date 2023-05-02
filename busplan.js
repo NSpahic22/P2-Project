@@ -33,12 +33,12 @@ function passengersinput(){
 
     let outputtext = [
         "Route length: ",
-        "driving time: ",
+        "Driving time: ",
         "Average weekly passengers: ",
         "Radius of bus stops: ",
-        "Amount of bus stops on route: ",
+        "Amount of bus stops: ",
         "Interval between buses: ",
-        "effeciency score of the route: "
+        "Effeciency score: "
     ];
 
     outlist.id = "additional_outputs"
@@ -47,7 +47,6 @@ function passengersinput(){
         outlist.innerHTML += outputtext[i]
         outlist.appendChild(breaker);
         outlist.innerHTML += outparr[i];
-        outlist.appendChild(breaker);
 
         if(moreelements(i,outparr)==true){
             outlist.innerHTML += "\n"

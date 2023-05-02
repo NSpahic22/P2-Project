@@ -1,3 +1,6 @@
+let totalDuration = 0;
+let drivingdistance = 0;
+
 //This is function is called with our API key
 function initMap () {
     google.maps.LatLng.prototype.distanceFrom = function(newLatLng) {
@@ -190,7 +193,7 @@ function callback(response, status) {
   }
 
 // Basically så giver den alle link en active toggle når man trykker på den 
-let ListElements = document.querySelectorAll('.link');
+let ListElements = document.querySelectorAll('link');
 
 ListElements.forEach(listElement =>{
     listElement.addEventListener('click', () => {
