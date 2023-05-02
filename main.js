@@ -1,3 +1,6 @@
+let totalDuration = 0;
+let drivingdistance = 0;
+
 //This is function is called with our API key
 function initMap () {
     //Assigning google functions
@@ -99,7 +102,6 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
             totalDuration += legs[i].duration.value;
         }
     })
-
     //3. Should there be a mistakes, that makes the function unable to run,
     //an alert will pop up on the website
     .catch((e) => window.alert("Directions request failed due to failed input"));
@@ -118,7 +120,7 @@ function callback(response, status) {
   }
 
 // Basically så giver den alle link en active toggle når man trykker på den 
-let ListElements = document.querySelectorAll('.link');
+let ListElements = document.querySelectorAll('link');
 
 ListElements.forEach(listElement =>{
     listElement.addEventListener('click', () => {

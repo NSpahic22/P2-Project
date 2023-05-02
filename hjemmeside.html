@@ -7,10 +7,6 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
    <link rel="stylesheet" type="text/css" href="/style.css" />
    
-  
-   <script async
-   src="https://maps.googleapis.com/maps/api/js?v=weekly&key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=places,geometry">
-   </script>
 </head>
 
 <body>
@@ -78,17 +74,18 @@
       <i class="fa fa-chevron-down" aria-hidden="true"></i>
    </div>
    <ul class="submenuItems">
-      <form id="avgpass">
+      <form id="avgpassengers">
             <input type="text" name="weeklypassengers" id="passengertext" placeholder="Average weekly passengers">
             <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
             <input type="button" name="passengersubmit" value="submit">
+            <div>
+               <b>Outputs</b>
+            </div >
+            <form id="dataouput">
+               <div id="here!" placeholder="Outputs"></div>
+            </form>  
       </form>
-         <div>
-            <b>Outputs</b>
-         </div>
-         <form id="outputs">
-            <div id="here!" placeholder="Outputs"></div>
-         </form>  
+         
    </ul>
 </li>
 <li class="link">
@@ -97,17 +94,16 @@
 </li>
 </ul>   
 <div id="map"></div>
-   <script 
-   src="/route_diversions.js"></script>
+<script 
+src="/route_diversions.js"></script>
 
-   <script
-   src="/passengers.js"></script>
+<script
+src="/busplan.js"></script>
 
-      <script 
-      src="/main.js"></script>
+<script 
+src="/main.js"></script>
 
-   <script
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly"
-   async></script>
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly" async></script>
 </body>
 </html>
