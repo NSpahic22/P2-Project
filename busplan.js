@@ -1,10 +1,11 @@
 document.querySelector('input[name="passengersubmit"]').addEventListener("click", passengersinput);
 let outputarr = [];
+let busstopradius = 0;
 
 function passengersinput(){
     let weeklyavg = document.querySelector('input[name="weeklypassengers"]').value
     let businterval = bustime(weeklyavg);
-    let busstopradius = document.querySelector('input[name="busstopradius"]').value;
+    busstopradius = document.querySelector('input[name="busstopradius"]').value;
     let outputplace = document.getElementById("here!");
     let outlist = document.createElement("div");
     let breaker = document.createElement("br");
@@ -20,6 +21,7 @@ function passengersinput(){
     businterval+=" minutes";
     removeAllChildNodes(outputplace);
     outlist.innerHTML="";
+    
 
     let outparr = [
         drivingdistance,
@@ -55,6 +57,13 @@ function passengersinput(){
     }
     }
     outputplace.append(outlist);
+
+    for (let i = 0; i*busstopradius < drivingdistance*1000; i++) {
+        new google.maps.Marker({
+            map: map,
+            position: polyline.GetPointAtDistance(i*1000),
+        });
+    }
 }   
 
 function moreelements(q, arr){

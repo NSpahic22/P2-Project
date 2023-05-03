@@ -1,8 +1,15 @@
 let totalDuration = 0;
 let drivingdistance = 0;
+let map;
+let directionsRenderer;
+let directionsService;
+let polyline;
+let totalDistance;
+
 
 //This is function is called with our API key
 function initMap () {
+    
     google.maps.LatLng.prototype.distanceFrom = function(newLatLng) {
         var EarthRadiusMeters = 6378137.0;
         var lat1 = this.lat();
@@ -40,13 +47,16 @@ function initMap () {
 
     //Assigning google functions
     const directionsRenderer = new google.maps.DirectionsRenderer({
-        draggable: true,
+        draggable: false,
     });
     const directionsService = new google.maps.DirectionsService();
     const transitLayer = new google.maps.TransitLayer();
     const trafficLayer = new google.maps.TrafficLayer();
+
+    window.initMap = initMap;
+
     //Creates maps
-    const map = new google.maps.Map(document.getElementById("map"), {
+    map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
         center: {lat:57.04, lng: 9.93},
     });
@@ -81,8 +91,7 @@ function initMap () {
         styles: styles["hide"]
     });
 
-    //Sets map onto our site 
-    directionsRenderer.setMap(map);
+    
     transitLayer.setMap(map); 
     
     //Adds eventlistener to the submit button for the addresses
@@ -93,7 +102,8 @@ function initMap () {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
 
-    
+    //Sets map onto our site 
+    directionsRenderer.setMap(map);
 }   
 
 //Syles defines what is hidden on the map
@@ -128,12 +138,12 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     //1. Fetches the route from the user, and sets the rules for creating the route
     directionsService.route(request, function(response, status) {
         if (status === 'OK') {
-            const polyline = new google.maps.Polyline({
+            polyline = new google.maps.Polyline({
                 path: [],
                 strokeColor: "#FF0000",
                 strokeWeight: 3,
             });
-
+            console.log(polyline);
             let bounds = new google.maps.LatLngBounds();
             let legs = response.routes[0].legs;
             let totalDistance = 0;
@@ -162,12 +172,10 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
             }
 
             //Creates a marker for every 1000 metres traveled along the path
-            for (let i = 0; i*1000 < totalDistance; i++) {
-                new google.maps.Marker({
-                    map: map,
-                    position: polyline.GetPointAtDistance(i*1000),
-                });
-            }
+
+            
+                
+        
 
             polyline.setMap(map);
             directionsRenderer.setDirections(response);
@@ -182,6 +190,8 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         }
     });
 }
+
+
 
 function callback(response, status) {
     if (status == 'OK') {
