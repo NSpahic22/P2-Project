@@ -5,7 +5,7 @@ let drivingdistance = 0;
 function initMap () {
     //Assigning google functions
     const directionsRenderer = new google.maps.DirectionsRenderer({
-        draggable: true,
+        draggable: false,
     });
     const directionsService = new google.maps.DirectionsService();
     const transitLayer = new google.maps.TransitLayer();
