@@ -1,3 +1,4 @@
+//These to variables are used to calculate effeciency
 let totalDuration = 0;
 let drivingdistance = 0;
 
@@ -45,7 +46,7 @@ function initMap () {
     const directionsService = new google.maps.DirectionsService();
     const transitLayer = new google.maps.TransitLayer();
     const trafficLayer = new google.maps.TrafficLayer();
-    //Creates maps
+    //Creates map
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
         center: {lat:57.04, lng: 9.93},
@@ -110,7 +111,6 @@ const styles = {
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     
-
     let routeStart = document.getElementById('from').value;
     let routeEnd = document.getElementById('to').value;
 

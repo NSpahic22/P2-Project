@@ -42,5 +42,4 @@ function morestops(event, addressarr){
         
         i++;
     }
-    console.log(waypointarr);
 }
