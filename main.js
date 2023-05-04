@@ -97,7 +97,7 @@ function initMap () {
     
 }   
 
-//Syles defines what is hidden on the map
+//Styles defines what is hidden on the map
 const styles = {
     default: [],
     hide: [
