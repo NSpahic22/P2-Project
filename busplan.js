@@ -3,19 +3,26 @@ let outputarr = [];
 
 function passengersinput(){
     let weeklyavg = document.querySelector('input[name="weeklypassengers"]').value
-    let businterval = bustime(weeklyavg);
+    let businterval = bustime(weeklyavg, drivingdistance);
     let busstopradius = document.querySelector('input[name="busstopradius"]').value;
     let outputplace = document.getElementById("here!");
     let outlist = document.createElement("div");
     let breaker = document.createElement("br");
     let stopandtime = timecalc(totalDuration, weeklyavg, drivingdistance, busstopradius, businterval);
+    let effeciency = "No route planned"
+    if(effcalc(totalDuration, weeklyavg, drivingdistance, stopandtime[0], businterval)!=NaN){
+        effeciency = effcalc(totalDuration, weeklyavg, drivingdistance, stopandtime[0], businterval)+" enh"
+    }
     let drivetime ='No route planned.'
     if(stopandtime[1]>0||stopandtime[2]>0||stopandtime[3]>0){
     drivetime = stopandtime[1] + 'h ' + stopandtime[2] + 'm ' + stopandtime[3] + 's'; }
     stops = stopandtime[0];
-    businterval+=" minutes";
+    if(drivingdistance!=0){
+    businterval+=" minutes"; }
     removeAllChildNodes(outputplace);
     outlist.innerHTML="";
+
+    console.log(drivingdistance);
 
     let outparr = [
         drivingdistance,
@@ -23,16 +30,18 @@ function passengersinput(){
         weeklyavg,
         busstopradius,
         stops,
-        businterval
+        businterval,
+        effeciency
     ];
 
     let outputtext = [
         "Route length: ",
-        "driving time: ",
+        "Driving time: ",
         "Average weekly passengers: ",
         "Radius of bus stops: ",
-        "Amount of bus stops on route: ",
-        "Interval between buses: "
+        "Amount of bus stops: ",
+        "Interval between buses: ",
+        "Effeciency score: "
     ];
 
     outlist.id = "additional_outputs"
@@ -41,7 +50,6 @@ function passengersinput(){
         outlist.innerHTML += outputtext[i]
         outlist.appendChild(breaker);
         outlist.innerHTML += outparr[i];
-        outlist.appendChild(breaker);
 
         if(moreelements(i,outparr)==true){
             outlist.innerHTML += "\n"
@@ -60,6 +68,12 @@ function moreelements(q, arr){
         }
     }
     return moreelementsinlist;
+}
+
+
+function effcalc(totaltime, users, length, stopint, busamount) {
+    if(stopint>length) {stopint=1};
+    return Math.floor(((totaltime/users)+((totaltime/busamount)/stopint+((users/stopint)*(busamount/users)))*length))
 }
 
 function timecalc(totaltime, users, length, stopint, busamount){
@@ -91,8 +105,12 @@ function removeAllChildNodes(parent) {
     }
 }
 
-function bustime(q){
+function bustime(q, n){
     let interval=0;
+    if(n === 0){
+        interval = "no route planned";
+        return interval;
+    }
     if(q<0){
         interval = 'error'
     } if(q>0 && q<=1000) {
