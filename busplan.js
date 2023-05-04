@@ -3,7 +3,7 @@ let outputarr = [];
 
 function passengersinput(){
     let weeklyavg = document.querySelector('input[name="weeklypassengers"]').value
-    let businterval = bustime(weeklyavg);
+    let businterval = bustime(weeklyavg, drivingdistance);
     let busstopradius = document.querySelector('input[name="busstopradius"]').value;
     let outputplace = document.getElementById("here!");
     let outlist = document.createElement("div");
@@ -17,9 +17,12 @@ function passengersinput(){
     if(stopandtime[1]>0||stopandtime[2]>0||stopandtime[3]>0){
     drivetime = stopandtime[1] + 'h ' + stopandtime[2] + 'm ' + stopandtime[3] + 's'; }
     stops = stopandtime[0];
-    businterval+=" minutes";
+    if(drivingdistance!=0){
+    businterval+=" minutes"; }
     removeAllChildNodes(outputplace);
     outlist.innerHTML="";
+
+    console.log(drivingdistance);
 
     let outparr = [
         drivingdistance,
@@ -102,8 +105,12 @@ function removeAllChildNodes(parent) {
     }
 }
 
-function bustime(q){
+function bustime(q, n){
     let interval=0;
+    if(n === 0){
+        interval = "no route planned";
+        return interval;
+    }
     if(q<0){
         interval = 'error'
     } if(q>0 && q<=1000) {
