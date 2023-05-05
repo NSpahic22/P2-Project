@@ -28,6 +28,11 @@
                <input type="checkbox" value="POI" id="Pointsofintrest">
                <span class="slider round"></span>
             </label>
+            <br> Bus stops <br>
+            <label class="switch">
+               <input type="checkbox" value="Traffic" id="busstops">
+               <span class="slider round"></span>
+            </label>
         <br>
       </form>
    </ul>
@@ -53,7 +58,7 @@
 
 <li class="link">
    <div class="dropdown">
-      Diversions
+      Re-routing
       <i class="fa fa-chevron-down" aria-hidden="true"></i>
    </div>
    <ul class="submenuItems">
@@ -75,9 +80,10 @@
    </div>
    <ul class="submenuItems">
       <form id="avgpassengers">
-            <input type="text" name="weeklypassengers" id="passengertext" placeholder="Average weekly passengers">
+            <input type="text" name="weeklypassengers" id="passengertext" placeholder="Avg. weekly passengers">
             <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
-            <input type="button" name="passengersubmit" value="submit">
+            <input type="text" name="routename" id="routename" placeholder="Name your route">
+           
             <div>
                <b>Outputs</b>
             </div >
