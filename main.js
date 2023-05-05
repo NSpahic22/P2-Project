@@ -62,34 +62,21 @@ function initMap () {
         }
     });
 
+    const pointsofintrest = document.getElementById("Pointsofintrest");
     const busstops = document.getElementById("busstops");
-    busstops.addEventListener("click", () => {
-        if (busstops.checked === true) {
-            transitLayer.setMap(map);
-        }
-        else {
-            transitLayer.setMap();
-        }
+    //Turns current busstops on and off
+    busstops.addEventListener("click", () => { 
+        visualcontroller(pointsofintrest, busstops, map);
     });
 
     //The button that turns the points of intrest on and off
-    const pointsofintrest = document.getElementById("Pointsofintrest");
-    pointsofintrest.addEventListener("click", () => {
-        if (pointsofintrest.checked === true) {
-            map.setOptions({
-                styles:styles["default"]
-            });
-        }
-        else {
-            map.setOptions({
-                styles:styles["hide"]
-            }); 
-        };
+    pointsofintrest.addEventListener("click", () => { 
+        visualcontroller(pointsofintrest, busstops, map);
     });
-    
+
     //Hides different points of intrest that just cause flodder when sites first loads
     map.setOptions({
-        styles: styles["hide"]
+        styles: styles["mapload"]
     });
 
     //Sets map onto our site 
@@ -102,38 +89,75 @@ function initMap () {
     document.getElementById("morestopbutton").addEventListener("click", () => {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
-
-    
 }   
 
 //Styles defines what is hidden on the map
 const styles = {
-    default: [
+    mapload: [
+        {
+            featureType:"transit.station.bus",
+            stylers:[{visibility:"off"}],
+        },
+        {
+            featureType:"poi",
+            stylers:[{visibility:"off"}],
+        }
+    ],
+    poitrue: [
         {
         featureType: "transit.station.bus",
         stylers: [{visibility: "off"}],
-        }
-    ],    
-    hide: [
-        {
-            featureType:"poi",
-            stylers: [{ visibility: "off"}],  
         },
         {
-            featureType: "transit.station.bus",
-            stylers: [{visibility: "off"}],
-        }
+            featureType:"poi",
+            stylers:[{visibility:"on"}],
+        },
     ],
-    bus: [
+    poiandbusstopstrue: [
+        {
+        featureType: "transit.station.bus",
+        stylers: [{visibility: "on"}],
+        },
         {
             featureType:"poi",
-            stylers: [{visibility: "off"}],
+            stylers:[{visibility:"on"}],
+        },
+    ],
+    poifalse: [
+        {
+            featureType:"poi",
+            stylers:[{visibility:"off"}],
         },
         {
             featureType: "transit.station.bus",
-            stylers: [{visibility: "off"}],
+            stylers: [{visibility: "on"}],
         },
-    ]
+    ],   
+};
+
+function visualcontroller(pointsofintrest, busstops, map) {
+    if (pointsofintrest.checked === true && busstops.checked === true) {
+        map.setOptions({
+            styles: styles["poiandbusstopstrue"]
+        });
+    }
+    else if(pointsofintrest.checked === true && busstops.checked === false) {
+        map.setOptions({
+            styles:styles["poitrue"]
+        }); 
+    }
+    else if(pointsofintrest.checked === false && busstops.checked === true) {
+        map.setOptions({
+            styles: styles["poifalse"]
+        });
+    }
+    else if(pointsofintrest.checked === false && busstops.checked === false) {
+        map.setOptions({
+            styles: styles["mapload"]
+        });
+    }
+    else if(pointsofintrest === false){
+    }
 };
 
 //Function called when user clicks submit

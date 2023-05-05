@@ -127,8 +127,8 @@
     .switch {
       position: absolute;
       display: inline-block;
-      width: 20%;
-      height: 20%;
+      width: 23%;
+      height: 15%;
     }
     .switch input {
       opacity: 0;
