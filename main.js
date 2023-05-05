@@ -1,3 +1,4 @@
+//These to variables are used to calculate effeciency
 let totalDuration = 0;
 let drivingdistance = 0;
 
@@ -45,7 +46,7 @@ function initMap () {
     const directionsService = new google.maps.DirectionsService();
     const transitLayer = new google.maps.TransitLayer();
     const trafficLayer = new google.maps.TrafficLayer();
-    //Creates maps
+    //Creates map
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
         center: {lat:57.04, lng: 9.93},
@@ -58,6 +59,16 @@ function initMap () {
         }
         else {
             trafficLayer.setMap();
+        }
+    });
+
+    const busstops = document.getElementById("busstops");
+    busstops.addEventListener("click", () => {
+        if (busstops.checked === true) {
+            transitLayer.setMap(map);
+        }
+        else {
+            transitLayer.setMap();
         }
     });
 
@@ -83,7 +94,6 @@ function initMap () {
 
     //Sets map onto our site 
     directionsRenderer.setMap(map);
-    transitLayer.setMap(map); 
     
     //Adds eventlistener to the submit button for the addresses
     document.getElementById("mode").addEventListener("click", () => {
@@ -96,21 +106,39 @@ function initMap () {
     
 }   
 
-//Syles defines what is hidden on the map
+//Styles defines what is hidden on the map
 const styles = {
-    default: [],
+    default: [
+        {
+        featureType: "transit.station.bus",
+        stylers: [{visibility: "off"}],
+        }
+    ],    
     hide: [
         {
             featureType:"poi",
             stylers: [{ visibility: "off"}],  
         },
+        {
+            featureType: "transit.station.bus",
+            stylers: [{visibility: "off"}],
+        }
     ],
+    bus: [
+        {
+            featureType:"poi",
+            stylers: [{visibility: "off"}],
+        },
+        {
+            featureType: "transit.station.bus",
+            stylers: [{visibility: "off"}],
+        },
+    ]
 };
 
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     
-
     let routeStart = document.getElementById('from').value;
     let routeEnd = document.getElementById('to').value;
 
