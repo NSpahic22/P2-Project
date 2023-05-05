@@ -82,6 +82,7 @@
       <form id="avgpassengers">
             <input type="text" name="weeklypassengers" id="passengertext" placeholder="Avg. weekly passengers">
             <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
+            <input type="text" name="routename" id="routename" placeholder="Name your route">
             <input type="button" name="passengersubmit" value="submit">
             <div>
                <b>Outputs</b>
@@ -105,10 +106,11 @@ src="/route_diversions.js"></script>
 <script
 src="/busplan.js"></script>
 
-<script 
+<script
 src="/main.js"></script>
 
-<script
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=&v=weekly" async></script>
+<script async
+   src="https://maps.googleapis.com/maps/api/js?v=weekly&key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=places,geometry">
+   </script>
 </body>
 </html>

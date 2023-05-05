@@ -1,10 +1,14 @@
+//Adds an event listener to the "submit" button.
 document.querySelector('input[name="passengersubmit"]').addEventListener("click", passengersinput);
 let outputarr = [];
+let busstopradius = 0;
 
+//The main function where the data about the bus plan is calculated and printed based on user inputs
 function passengersinput(){
+    //a list of variable definitions for the different in- and outputs.
     let weeklyavg = document.querySelector('input[name="weeklypassengers"]').value
     let businterval = bustime(weeklyavg, drivingdistance);
-    let busstopradius = document.querySelector('input[name="busstopradius"]').value;
+    busstopradius = document.querySelector('input[name="busstopradius"]').value;
     let outputplace = document.getElementById("here!");
     let outlist = document.createElement("div");
     let breaker = document.createElement("br");
@@ -19,21 +23,23 @@ function passengersinput(){
     stops = stopandtime[0];
     if(drivingdistance!=0){
     businterval+=" minutes"; }
+
+    //every time the code is run, the old data are removed before the new are added
     removeAllChildNodes(outputplace);
     outlist.innerHTML="";
 
-    console.log(drivingdistance);
-
+    //an array containing all the data that is printed for the user about the bus route
     let outparr = [
-        drivingdistance,
+        drivingdistance + "km",
         drivetime,
         weeklyavg,
         busstopradius,
         stops,
         businterval,
-        effeciency
+        effeciency  
     ];
 
+    //the text, which describes the aforementioned data
     let outputtext = [
         "Route length: ",
         "Driving time: ",
@@ -44,6 +50,7 @@ function passengersinput(){
         "Effeciency score: "
     ];
 
+    //This loop prints the data and the text, and adds line spaces for the readability of the data
     outlist.id = "additional_outputs"
     for(let i=0; i<outparr.length; i++){
         if(outparr[i]!=""){
@@ -58,8 +65,17 @@ function passengersinput(){
     }
     }
     outputplace.append(outlist);
+
+    for (let i = 0; i*busstopradius < drivingdistance*1000; i++) {
+        new google.maps.Marker({
+            map: map,
+            position: polyline.GetPointAtDistance(i*1000),
+        });
+    }
+    polyline.setMap(map);
 }   
 
+//a function used in the loop. This function checks if there are more elements that are non empty in the array
 function moreelements(q, arr){
     let moreelementsinlist = false;
     for(let i=q+1; i<arr.length; i++){
@@ -70,27 +86,27 @@ function moreelements(q, arr){
     return moreelementsinlist;
 }
 
-
+//The calculator of the effeciency score of the bus route
 function effcalc(totaltime, users, length, stopint, busamount) {
     if(stopint>length) {stopint=1};
-    return Math.floor(((totaltime/users)+((totaltime/busamount)/stopint+((users/stopint)*(busamount/users)))*length))
+    return Math.floor(((totaltime/users)+((totaltime/busamount)/stopint+((users/stopint)*(busamount/users)))*length)*200/users)
 }
 
+//the calculator of the amount of stops needed on the route and the time it takes to drive the route in seconds, hours and minutes
 function timecalc(totaltime, users, length, stopint, busamount){
     length=length*1000
 
-    let stops = (length-(length % stopint))/stopint;
+    let stops = ((length-(length % stopint))/stopint)/2;
     let peopleprstopprprminprbus = ((users-users%7)/7)/(24*60)*busamount;
     let additionalminutes = 0
     for(i=0;i<=peopleprstopprprminprbus;i+=5){
         additionalminutes+=60;
     }
-    console.log(totaltime);
+    
     if(totaltime>0){
     totaltime+=additionalminutes; }
-    console.log(totaltime);
     
-
+    //The time is put into hours, minutes and seconds.
     const hours = Math.floor(totaltime / 3600);
     const minutes = Math.floor((totaltime - (hours * 3600)) / 60);
     const seconds = Math.floor(totaltime - (hours * 3600) - (minutes * 60));
@@ -99,12 +115,15 @@ function timecalc(totaltime, users, length, stopint, busamount){
     return returnarr;
 }
 
+//removes all childen from a node, needed in the main function of the busplan.
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 }
 
+
+//bases the time interval between buses on amount of average weekly users
 function bustime(q, n){
     let interval=0;
     if(n === 0){
