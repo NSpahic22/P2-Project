@@ -115,9 +115,15 @@ google.maps.Polyline.prototype.GetPointsAtDistance = function(metres) {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
 
+<<<<<<< Updated upstream
     //calculateAndDisplayRoute(directionsService, directionsDisplay);
     
 
+=======
+    //Sets map onto our site 
+    directionsRenderer.setMap(map);
+  
+>>>>>>> Stashed changes
 }   
 
 //Syles defines what is hidden on the map
@@ -129,6 +135,21 @@ const styles = {
             stylers: [{ visibility: "off"}],  
         },
     ],
+<<<<<<< Updated upstream
+=======
+    bus: [
+        {
+            featureType:"poi",
+            stylers: [{visibility: "off"}],
+        },
+        {
+            featureType: "transit.station.bus",
+            stylers: [{visibility: "off"}],
+        },
+    ]
+
+    
+>>>>>>> Stashed changes
 };
 
 //Function called when user clicks submit
@@ -237,3 +258,42 @@ function callback(response, status) {
       console.log('Error: ' + status);
     }
   }
+<<<<<<< Updated upstream
+=======
+
+// Basically så giver den alle link en active toggle når man trykker på den 
+let ListElements = document.querySelectorAll('link');
+
+ListElements.forEach(listElement =>{
+    listElement.addEventListener('click', () => {
+        if (listElement.classisList.contains('active')){
+            listElement.classicList.remove('active');
+        }else{
+            listElement.forEach(ListE => {
+                ListE.classList.remove('active');
+            })
+            listElement.classList.toggle('active');
+        }
+    })
+});
+// Det her var fikset til hvorfor den ikke gad at virke før, uden den her vil den ikke dropdown. Har ikke helt styr på hvordan den virker.
+// Get all dropdown buttons
+   var dropdowns = document.getElementsByClassName("dropdown");
+
+   // Add a click event listener to each dropdown button
+   for (var i = 0; i < dropdowns.length; i++) {
+      dropdowns[i].addEventListener("click", function() {
+         this.classList.toggle("active");
+         var submenuItems = this.nextElementSibling;
+         if (submenuItems.style.display === "block") {
+            submenuItems.style.display = "none";
+         } else {
+            submenuItems.style.display = "block";
+         }
+      });
+   }
+   function outputplacer(event){
+    for(i=0; i<n; i++){}
+
+}
+>>>>>>> Stashed changes
