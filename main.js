@@ -62,6 +62,16 @@ function initMap () {
         }
     });
 
+    const busstops = document.getElementById("busstops");
+    busstops.addEventListener("click", () => {
+        if (busstops.checked === true) {
+            transitLayer.setMap(map);
+        }
+        else {
+            transitLayer.setMap();
+        }
+    });
+
     //The button that turns the points of intrest on and off
     const pointsofintrest = document.getElementById("Pointsofintrest");
     pointsofintrest.addEventListener("click", () => {
@@ -84,7 +94,6 @@ function initMap () {
 
     //Sets map onto our site 
     directionsRenderer.setMap(map);
-    transitLayer.setMap(map); 
     
     //Adds eventlistener to the submit button for the addresses
     document.getElementById("mode").addEventListener("click", () => {
@@ -99,13 +108,32 @@ function initMap () {
 
 //Styles defines what is hidden on the map
 const styles = {
-    default: [],
+    default: [
+        {
+        featureType: "transit.station.bus",
+        stylers: [{visibility: "off"}],
+        }
+    ],    
     hide: [
         {
             featureType:"poi",
             stylers: [{ visibility: "off"}],  
         },
+        {
+            featureType: "transit.station.bus",
+            stylers: [{visibility: "off"}],
+        }
     ],
+    bus: [
+        {
+            featureType:"poi",
+            stylers: [{visibility: "off"}],
+        },
+        {
+            featureType: "transit.station.bus",
+            stylers: [{visibility: "off"}],
+        },
+    ]
 };
 
 //Function called when user clicks submit
