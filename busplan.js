@@ -64,6 +64,7 @@ function passengersinput(){
             position: polyline.GetPointAtDistance(i*1000),
         });
     }
+    polyline.setMap(map);
 }   
 
 function moreelements(q, arr){

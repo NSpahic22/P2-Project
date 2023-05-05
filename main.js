@@ -7,9 +7,10 @@ let polyline;
 let totalDistance;
 
 
-//This is function is called with our API key
+//This function is called with our API key
 function initMap () {
     
+    //This function is used to calculate a distance between 2 coordinates. It returns the result in meters
     google.maps.LatLng.prototype.distanceFrom = function(newLatLng) {
         var EarthRadiusMeters = 6378137.0;
         var lat1 = this.lat();
@@ -26,6 +27,7 @@ function initMap () {
         return d;
       }
 
+    //This function finds the coordinates of a point located on specific distance on a path. It returns the lat and lng of the specific point.
     google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
         if (metres == 0) return this.getPath().getAt(0);
         if (metres < 0) return null;
@@ -53,13 +55,12 @@ function initMap () {
     const transitLayer = new google.maps.TransitLayer();
     const trafficLayer = new google.maps.TrafficLayer();
 
-    window.initMap = initMap;
-
-    //Creates maps
+    //Creates the map
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
         center: {lat:57.04, lng: 9.93},
     });
+
     //The button that turns traffic on and off  
     const Traffic = document.getElementById("Traffic");
     Traffic.addEventListener("click", () => {
@@ -86,7 +87,7 @@ function initMap () {
         };
     });
     
-    //Hides different points of intrest that just cause flodder when sites first loads
+    //Hides different points of interest that just cause flodder when sites first loads
     map.setOptions({
         styles: styles["hide"]
     });
@@ -119,11 +120,12 @@ const styles = {
 
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
-    
 
+    //Collects the start and end of the route via user input
     let routeStart = document.getElementById('from').value;
     let routeEnd = document.getElementById('to').value;
 
+    //Requirements for the newly created route
     let request = {
         origin: routeStart,
         destination: routeEnd,
@@ -134,19 +136,26 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
         unitSystem: google.maps.UnitSystem.METRIC
     }
     
-    //The google function which:
-    //1. Fetches the route from the user, and sets the rules for creating the route
+    //Google function that fetches directions for the requested route
     directionsService.route(request, function(response, status) {
+        //If the request is valid, the website will proceed with creating the route 
         if (status === 'OK') {
+
+            //Specifications for a polyline that displays the newly created route
             polyline = new google.maps.Polyline({
                 path: [],
                 strokeColor: "#FF0000",
                 strokeWeight: 3,
             });
-            console.log(polyline);
+
+            //Lat/lng limit used to keep an object within a specific location
             let bounds = new google.maps.LatLngBounds();
+
+            //Finds the legs of the newly created route
             let legs = response.routes[0].legs;
-            let totalDistance = 0;
+
+            //Total distance of the newly created route in meters
+            totalDistance = 0;
 
             //Creates a precise path for the polyline, as overview_path is inaccurate at larger distances
             for (i = 0; i < legs.length; i++) {
@@ -160,12 +169,13 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
                 }
             }
 
+            //Calculates the distance of the route
             for (let i = 0; i < legs.length; i++) {
                 totalDistance += legs[i].distance.value;
             }
             drivingdistance=totalDistance/1000;
         
-
+            //Calculates the duration of the route
             for (let i = 0; i < legs.length; i++) {
                 totalDuration += legs[i].duration.value;
         
@@ -177,7 +187,7 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
                 
         
 
-            polyline.setMap(map);
+            
             directionsRenderer.setDirections(response);
         }
         else 
