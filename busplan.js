@@ -8,7 +8,7 @@ function passengersinput(){
     //a list of variable definitions for the different in- and outputs.
     let weeklyavg = document.querySelector('input[name="weeklypassengers"]').value
     let businterval = bustime(weeklyavg, drivingdistance);
-    let busstopradius = document.querySelector('input[name="busstopradius"]').value;
+    busstopradius = document.querySelector('input[name="busstopradius"]').value;
     let outputplace = document.getElementById("here!");
     let outlist = document.createElement("div");
     let breaker = document.createElement("br");
