@@ -2,6 +2,7 @@
 document.querySelector('input[name="passengersubmit"]').addEventListener("click", passengersinput);
 let outputarr = [];
 let busstopradius = 0;
+let busStops = [];
 
 //The main function where the data about the bus plan is calculated and printed based on user inputs
 function passengersinput(){
@@ -66,12 +67,21 @@ function passengersinput(){
     }
     outputplace.append(outlist);
 
-    for (let i = 0; i*busstopradius < drivingdistance*1000; i++) {
-        new google.maps.Marker({
+    for (let i = 1; i*busstopradius < drivingdistance*1000; i++) {
+        busStops = new google.maps.Marker({
             map: map,
             position: polyline.GetPointAtDistance(i*1000),
+            draggable: true,
         });
     }
+
+    busStops.addEventListener("drag", function(){
+        console.log("yo")
+        let closestPolyPoint = polyline.GetClosestPoint(busStops.getPosition());
+        busStops.setPosition(closestPolyPoint)
+    });
+    busStops.push(busStops);
+
     polyline.setMap(map);
 }   
 
