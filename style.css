@@ -177,3 +177,10 @@
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .buttonreload {
+   position: absolute;
+   top: 94%;
+   left: 90%;
+   z-index: 10;
+  }
