@@ -1,20 +1,14 @@
 document.querySelector('input[name="passengersubmit"]').addEventListener("click", passengersinput);
 let outputarr = [];
-<<<<<<< Updated upstream
-=======
 let busstopradius = 0;
 let n = 0;
 let outparr = [];
 let outputtext = []
->>>>>>> Stashed changes
 
 function passengersinput(){
-<<<<<<< Updated upstream
-=======
     //a list of variable definitions for the different in- and outputs.
     let routename = document.getElementById("routename");
     
->>>>>>> Stashed changes
     let weeklyavg = document.querySelector('input[name="weeklypassengers"]').value
     let businterval = bustime(weeklyavg);
     let busstopradius = document.querySelector('input[name="busstopradius"]').value;
@@ -30,14 +24,9 @@ function passengersinput(){
     removeAllChildNodes(outputplace);
     outlist.innerHTML="";
 
-<<<<<<< Updated upstream
-    let outparr = [
-        drivingdistance,
-=======
     //an array containing all the data that is printed for the user about the bus route
     outparr = [
         drivingdistance + "km",
->>>>>>> Stashed changes
         drivetime,
         weeklyavg,
         busstopradius,
@@ -45,12 +34,8 @@ function passengersinput(){
         businterval
     ];
 
-<<<<<<< Updated upstream
-    let outputtext = [
-=======
     //the text, which describes the aforementioned data
     outputtext = [
->>>>>>> Stashed changes
         "Route length: ",
         "driving time: ",
         "Average weekly passengers: ",
@@ -75,8 +60,6 @@ function passengersinput(){
     }
     }
     outputplace.append(outlist);
-<<<<<<< Updated upstream
-=======
 
     for (let i = 0; i*busstopradius < drivingdistance*1000; i++) {
         new google.maps.Marker({
@@ -86,7 +69,6 @@ function passengersinput(){
     }
     polyline.setMap(map);
     n+=2
->>>>>>> Stashed changes
 }   
 
 function moreelements(q, arr){

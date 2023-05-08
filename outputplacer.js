@@ -1,9 +1,10 @@
 function outputplacer(outputname){
-    let button = document.createElement("input");
-    
-    button.type = "button";
-    button.id = outputname;
-    button.value = outputname;
+    let submenu = document.createElement("li")
+    submenu.class = "link"
+    let dropdownmen = document.createElement("div");
+    let elementi = document.createElement("i");
+    elementi.class = "fa fa-chevron-down";
+    let items = document.createElement("ul");
+    items.class = "submenuitems"
 
-    button.addEventListener("click",output)
 }

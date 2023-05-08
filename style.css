@@ -7,7 +7,6 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
   }
-
   #map {
       height: 100%;
   }
@@ -176,4 +175,8 @@
 
   .slider.round:before {
     border-radius: 50%;
+  }
+
+  #outputsgohere {
+    left: 84%
   }
