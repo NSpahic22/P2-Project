@@ -2,7 +2,7 @@
 document.querySelector('input[name="passengersubmit"]').addEventListener("click", passengersinput);
 let outputarr = [];
 let busstopradius = 0;
-let busStops = [];
+let marker = [];
 
 //The main function where the data about the bus plan is calculated and printed based on user inputs
 function passengersinput(){
@@ -68,19 +68,32 @@ function passengersinput(){
     outputplace.append(outlist);
 
     for (let i = 1; i*busstopradius < drivingdistance*1000; i++) {
-        busStops = new google.maps.Marker({
+        marker[i-1] = new google.maps.Marker({
             map: map,
             position: polyline.GetPointAtDistance(i*1000),
             draggable: true,
         });
     }
 
-    busStops.addEventListener("drag", function(){
-        console.log("yo")
-        let closestPolyPoint = polyline.GetClosestPoint(busStops.getPosition());
-        busStops.setPosition(closestPolyPoint)
-    });
-    busStops.push(busStops);
+    for (let i = 0; i < marker.length; i++) {
+        marker[i].addListener("dragend", () => {
+            let markerPosition = marker[i].getPosition();
+            console.log(markerPosition);
+            let closestPoint = 0;
+            let shortestDist = google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[0]);
+            console.log(shortestDist);
+            for (let j = 1; j < polypath.length; j++) {
+                if (google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[j]) < shortestDist) {
+                    shortestDist = google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[j]);
+                }
+                
+            }
+            closestPoint = j;
+            marker[i].setPosition(polypath[j])
+        });
+    }
+    
+    //marker.push(marker[i]);
 
     polyline.setMap(map);
 }   

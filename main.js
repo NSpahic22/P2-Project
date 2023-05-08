@@ -6,6 +6,7 @@ let directionsRenderer;
 let directionsService;
 let polyline;
 let totalDistance;
+let polypath;
 
 
 //This function is called with our API key
@@ -225,6 +226,8 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
                     }
                 }
             }
+            polypath = polyline.getPath().getArray();
+            console.log(polypath);
 
             //Calculates the distance of the route
             for (let i = 0; i < legs.length; i++) {
