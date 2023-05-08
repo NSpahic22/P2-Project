@@ -1,31 +1,68 @@
-// Global variables needed for busstops
-let directionDisplay;
-let directionsService;
+//These to variables are used to calculate effeciency
+let totalDuration = 0;
+let drivingdistance = 0;
 let map;
-let polyline = null;
-let gmarkers = [];
-let infowindow = new google.maps.InfoWindow();
-let markerIcons = new Array();
-markerIcons["red"] = {
-  url: "http://maps.google.com/mapfiles/ms/micons/red.png"
-};
+let directionsRenderer;
+let directionsService;
+let polyline;
+let totalDistance;
+let polypath;
 
-let totalDuration;
 
-//This is function is called with our API key
+//This function is called with our API key
 function initMap () {
+    
+    //This function is used to calculate a distance between 2 coordinates. It returns the result in meters
+    google.maps.LatLng.prototype.distanceFrom = function(newLatLng) {
+        var EarthRadiusMeters = 6378137.0;
+        var lat1 = this.lat();
+        var lon1 = this.lng();
+        var lat2 = newLatLng.lat(); 
+        var lon2 = newLatLng.lng();
+        var dLat = (lat2-lat1) * Math.PI / 180;
+        var dLon = (lon2-lon1) * Math.PI / 180;
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = EarthRadiusMeters * c;
+        return d;
+      }
+
+    //This function finds the coordinates of a point located on specific distance on a path. It returns the lat and lng of the specific point.
+    google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
+        if (metres == 0) return this.getPath().getAt(0);
+        if (metres < 0) return null;
+        if (this.getPath().getLength() < 2) return null;
+        var dist=0;
+        var olddist=0;
+        for (var i=1; (i < this.getPath().getLength() && dist < metres); i++) {
+            olddist = dist;
+            dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i-1));
+        }
+        if (dist < metres) {
+            return null;
+        }
+        var p1= this.getPath().getAt(i-2);
+        var p2= this.getPath().getAt(i-1);
+        var m = (metres-olddist)/(dist-olddist);
+        return new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
+      }
+
     //Assigning google functions
     const directionsRenderer = new google.maps.DirectionsRenderer({
-        draggable: true,
+        draggable: false,
     });
     const directionsService = new google.maps.DirectionsService();
     const transitLayer = new google.maps.TransitLayer();
     const trafficLayer = new google.maps.TrafficLayer();
-    //Creates maps
-    const map = new google.maps.Map(document.getElementById("map"), {
+
+    //Creates the map
+    map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
         center: {lat:57.04, lng: 9.93},
     });
+
     //The button that turns traffic on and off  
     const Traffic = document.getElementById("Traffic");
     Traffic.addEventListener("click", () => {
@@ -37,71 +74,22 @@ function initMap () {
         }
     });
 
-    //The button that turns the points of intrest on and off
     const pointsofintrest = document.getElementById("Pointsofintrest");
-    pointsofintrest.addEventListener("click", () => {
-        if (pointsofintrest.checked === true) {
-            map.setOptions({
-                styles:styles["default"]
-            });
-        }
-        else {
-            map.setOptions({
-                styles:styles["hide"]
-            }); 
-        };
+    const busstops = document.getElementById("busstops");
+    //Turns current busstops on and off
+    busstops.addEventListener("click", () => { 
+        visualcontroller(pointsofintrest, busstops, map);
     });
-    //Hides different points of intrest that just cause flodder when sites first loads
+
+    //The button that turns the points of intrest on and off
+    pointsofintrest.addEventListener("click", () => { 
+        visualcontroller(pointsofintrest, busstops, map);
+    });
+    
+    //Hides different points of interest that just cause flodder when sites first loads
     map.setOptions({
-        styles: styles["hide"]
+        styles: styles["mapload"]
     });
-
-    // === A method which returns an array of GLatLngs of points a given interval along the path ===
-google.maps.Polyline.prototype.GetPointsAtDistance = function(metres) {
-  let next = metres;
-  let points = [];
-  // some awkward special cases
-  if (metres <= 0) return points;
-  let dist = 0;
-  let olddist = 0;
-  for (let i = 1;
-    (i < this.getPath().getLength()); i++) {
-    olddist = dist;
-    dist += google.maps.geometry.spherical.computeDistanceBetween(this.getPath().getAt(i), this.getPath().getAt(i - 1));
-    while (dist > next) {
-      let p1 = this.getPath().getAt(i - 1);
-      let p2 = this.getPath().getAt(i);
-      let m = (next - olddist) / (dist - olddist);
-      points.push(new google.maps.LatLng(p1.lat() + (p2.lat() - p1.lat()) * m, p1.lng() + (p2.lng() - p1.lng()) * m));
-      next += metres;
-    }
-  }
-  return points;
-}
-
-    /*
-    //Makes the already existing routes. (HAS BEEN PUT ON PAUSED,
-    TO SEE IF BETTER ALTERNATIVE IS AVALIABLE)
-    const routea = new google.maps.Polyline({
-        path: route1,
-        geodesic: true,
-        strokeColor: "#0000FF",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        interpolate: true,
-    });
-    routea.setMap(map);
-
-    const routeb = new google.maps.Polyline({
-        path: route2,
-        geodesic: true,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        interpolate: true,
-    });
-    routeb.setMap(map);
-    */
 
     //Sets map onto our site 
     directionsRenderer.setMap(map);
@@ -115,140 +103,165 @@ google.maps.Polyline.prototype.GetPointsAtDistance = function(metres) {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
 
-<<<<<<< Updated upstream
-    //calculateAndDisplayRoute(directionsService, directionsDisplay);
-    
-
-=======
     //Sets map onto our site 
     directionsRenderer.setMap(map);
-  
->>>>>>> Stashed changes
 }   
 
-//Syles defines what is hidden on the map
+//Styles defines what is hidden on the map
 const styles = {
-    default: [],
-    hide: [
+    mapload: [
+        {
+            featureType:"transit.station.bus",
+            stylers:[{visibility:"off"}],
+        },
         {
             featureType:"poi",
-            stylers: [{ visibility: "off"}],  
+            stylers:[{visibility:"off"}],
+        }
+    ],
+    poitrue: [
+        {
+        featureType: "transit.station.bus",
+        stylers: [{visibility: "off"}],
+        },
+        {
+            featureType:"poi",
+            stylers:[{visibility:"on"}],
         },
     ],
-<<<<<<< Updated upstream
-=======
-    bus: [
+    poiandbusstopstrue: [
+        {
+        featureType: "transit.station.bus",
+        stylers: [{visibility: "on"}],
+        },
         {
             featureType:"poi",
-            stylers: [{visibility: "off"}],
+            stylers:[{visibility:"on"}],
+        },
+    ],
+    poifalse: [
+        {
+            featureType:"poi",
+            stylers:[{visibility:"off"}],
         },
         {
             featureType: "transit.station.bus",
-            stylers: [{visibility: "off"}],
+            stylers: [{visibility: "on"}],
         },
-    ]
+    ],   
+};
 
-    
->>>>>>> Stashed changes
+function visualcontroller(pointsofintrest, busstops, map) {
+    if (pointsofintrest.checked === true && busstops.checked === true) {
+        map.setOptions({
+            styles: styles["poiandbusstopstrue"]
+        });
+    }
+    else if(pointsofintrest.checked === true && busstops.checked === false) {
+        map.setOptions({
+            styles:styles["poitrue"]
+        }); 
+    }
+    else if(pointsofintrest.checked === false && busstops.checked === true) {
+        map.setOptions({
+            styles: styles["poifalse"]
+        });
+    }
+    else if(pointsofintrest.checked === false && busstops.checked === false) {
+        map.setOptions({
+            styles: styles["mapload"]
+        });
+    }
+    else if(pointsofintrest === false){
+    }
 };
 
 //Function called when user clicks submit
-function caluclateAndDisplayRoutes(directionsService, directionsDisplay) {
-    directionsService.route({
-      origin: document.getElementById("from").value,
-      destination: document.getElementById("to").value,
-      travelMode: 'DRIVING',
-      avoidHighways: true,
-      waypoints: waypointarr,
-      optimizeWaypoints: true,
-      unitSystem: google.maps.UnitSystem.METRIC
-  }, function(response, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
+function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
 
-        const polyline = new google.maps.Polyline({
-          path: response.routes[0].overview_path
-      });
-        
-        let bounds = new google.maps.LatLngBounds();
-        startLocation = new Object();
-        endLocation = new Object();
-  
-        directionsDisplay.setDirections(response);
-  
-        let route = response.routes[0];
-        // For each route, display summary information.
-        let path = response.routes[0].overview_path;
-        let legs = response.routes[0].legs;
+    //Collects the start and end of the route via user input
+    let routeStart = document.getElementById('from').value;
+    let routeEnd = document.getElementById('to').value;
 
-        /*for (i=0;i<legs.length;i++) {
-            var steps = legs[i].steps;
-            for (j=0;j<steps.length;j++) {
-              var nextSegment = steps[j].path;
-              for (k=0;k<nextSegment.length;k++) {
-                polyline.getPath().push(nextSegment[k]);
-              }
-            }
-          } */
-  
-        let totalDistance = 0;
-        for (let i = 0; i < legs.length; i++) {
-            totalDistance += legs[i].distance.value;
-        }
-        drivingdistance=totalDistance/1000;
-        for (let i = 0; i < legs.length; i++) {
-        totalDuration += legs[i].duration.value;
-        }
-  
-        for (i = 0; i < legs.length; i++) {
-          if (i == 0) {
-            startLocation.latlng = legs[i].start_location;
-            startLocation.address = legs[i].start_address;
-            // marker = google.maps.Marker({map:map,position: startLocation.latlng});
-            marker = createMarker(legs[i].start_location, "start", legs[i].start_address, "green");
-          }
-          endLocation.latlng = legs[i].end_location;
-          endLocation.address = legs[i].end_address;
-          let steps = legs[i].steps;
-          for (j = 0; j < steps.length; j++) {
-            let nextSegment = steps[j].path;
-            for (k = 0; k < nextSegment.length; k++) {
-              polyline.getPath().push(nextSegment[k]);
-              bounds.extend(nextSegment[k]);
-            }
-          }
-        }
-  
-        polyline.setMap(map);
-        for (let i = 0; i < gmarkers.length; i++) {
-          gmarkers[i].setMap(null);
-        }
-        gmarkers = [];
-        let points = polyline.GetPointsAtDistance(1000);
-        for (let i = 0; i < points.length; i++) {
-          let marker = new google.maps.Marker({
-            map: map,
-            position: points[i],
-            title: i + 1 + " km"
-          });
-          marker.addListener('click', openInfoWindow);
-        }
-  
-      } else {
-        alert("directions response " + status);
-      }
-    });
-  
-  
-    /*  function(response, status) {
+    //Requirements for the newly created route
+    let request = {
+        origin: routeStart,
+        destination: routeEnd,
+        travelMode: 'DRIVING',
+        avoidHighways: true,
+        waypoints: waypointarr,
+        optimizeWaypoints: true,
+        unitSystem: google.maps.UnitSystem.METRIC
+    }
+    
+    //Google function that fetches directions for the requested route
+    directionsService.route(request, function(response, status) {
+        //If the request is valid, the website will proceed with creating the route 
         if (status === 'OK') {
-          directionsDisplay.setDirections(response);
-        } else {
-          window.alert('Directions request failed due to ' + status);
-        }
-      }); */
-  }
 
-  google.maps.event.addDomListener(window, 'load', initMap);
+            //Specifications for a polyline that displays the newly created route
+            polyline = new google.maps.Polyline({
+                path: [],
+                strokeColor: "#FF0000",
+                strokeWeight: 3,
+            });
+
+            //Lat/lng limit used to keep an object within a specific location
+            let bounds = new google.maps.LatLngBounds();
+
+            //Finds the legs of the newly created route
+            let legs = response.routes[0].legs;
+
+            //Total distance of the newly created route in meters
+            totalDistance = 0;
+
+            //Creates a precise path for the polyline, as overview_path is inaccurate at larger distances
+            for (i = 0; i < legs.length; i++) {
+                let steps = legs[i].steps;
+                for (j = 0; j < steps.length; j++) {
+                    let nextSegment = steps[j].path;
+                    for (k = 0; k < nextSegment.length; k++) {
+                        polyline.getPath().push(nextSegment[k]);
+                        bounds.extend(nextSegment[k]);
+                    }
+                }
+            }
+            polypath = polyline.getPath().getArray();
+            console.log(polypath);
+
+            //Calculates the distance of the route
+            for (let i = 0; i < legs.length; i++) {
+                totalDistance += legs[i].distance.value;
+            }
+            drivingdistance=totalDistance/1000;
+        
+            //Calculates the duration of the route
+            for (let i = 0; i < legs.length; i++) {
+                totalDuration += legs[i].duration.value;
+        
+            }
+
+            //Creates a marker for every 1000 metres traveled along the path
+
+            
+                
+        
+
+            
+            directionsRenderer.setDirections(response);
+        }
+        else 
+        {   
+            // Should there be a mistake, an alert will pop up on the website describing what is wrong
+            window.alert('Directions request failed due to ' + status);
+        }
+        for(let i = 0; i<waypointarr.length; i++){
+            console.log()
+        }
+    });
+}
+
+
 
 function callback(response, status) {
     if (status == 'OK') {
@@ -258,8 +271,6 @@ function callback(response, status) {
       console.log('Error: ' + status);
     }
   }
-<<<<<<< Updated upstream
-=======
 
 // Basically så giver den alle link en active toggle når man trykker på den 
 let ListElements = document.querySelectorAll('link');
@@ -292,8 +303,3 @@ ListElements.forEach(listElement =>{
          }
       });
    }
-   function outputplacer(event){
-    for(i=0; i<n; i++){}
-
-}
->>>>>>> Stashed changes
