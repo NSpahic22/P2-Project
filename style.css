@@ -37,6 +37,7 @@
     width: 15%;
     left: 1%;
     z-index: 50;
+    cursor: move;
     line-height: 30px;
     max-width: 3500px;
     margin: 60px auto 20px;
@@ -187,4 +188,7 @@
 
 #outputsgohere {
   left: 84%
+}
+#popstopper {
+  left: 17%
 }
