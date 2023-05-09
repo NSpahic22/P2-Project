@@ -16,6 +16,7 @@ function passengersinput(){
     if(stopandtime[1]>0||stopandtime[2]>0||stopandtime[3]>0){
     drivetime = stopandtime[1] + 'h ' + stopandtime[2] + 'm ' + stopandtime[3] + 's'; }
     stops = stopandtime[0];
+    let effeciency = effcalc(totalDuration, weeklyavg, drivingdistance, stops, businterval);
     businterval+=" minutes";
 
     //an array containing all the data that is printed for the user about the bus route
@@ -25,7 +26,8 @@ function passengersinput(){
         weeklyavg,
         busstopradius,
         stops,
-        businterval
+        businterval,
+        effeciency
     ];
 
     //the text, which describes the aforementioned data
@@ -35,7 +37,8 @@ function passengersinput(){
         "Average weekly passengers: ",
         "Radius of bus stops: ",
         "Amount of bus stops on route: ",
-        "Interval between buses: "
+        "Interval between buses: ",
+        "Effeciency score: "
     ];
 
     outputplacer(routename);
@@ -57,6 +60,11 @@ function moreelements(q, arr){
         }
     }
     return moreelementsinlist;
+}
+
+function effcalc(totaltime, users, length, stopint, busamount) {
+    if(stopint>length) {stopint=1};
+    return Math.floor(((totaltime/users)+((totaltime/busamount)/stopint+((users/stopint)*(busamount/users)))*length)*200/users)
 }
 
 function timecalc(totaltime, users, length, stopint, busamount){
