@@ -1,14 +1,24 @@
 let submenuarr = []
+let divarr = []
 let submenunr = 0;
 
+
+
+
 function outputplacer(outputname) {
-    // Create the <li> element
+    let parent = document.getElementById("outputsgohere")
+    let childnode = document.createElement("div")
+    childnode.id = "outputbelowhere"
+    removeAllChildNodes(parent)
+    
+    parent.appendChild(childnode);
+
     const listItem = document.createElement('li');
     listItem.className = 'link';
   
     // Create the <div> element for the dropdown menu
     const dropdown = document.createElement('div');
-    dropdown.className = 'dropdown_output';
+    dropdown.className = 'dropdown';
   
     // Create the <i> element for the dropdown icon
     const icon = document.createElement('i');
@@ -32,25 +42,37 @@ function outputplacer(outputname) {
     // Append the submenu content to the submenu <ul> element
     submenu.appendChild(submenuContent);
   
-    submenu.addEventListener("click", function() {
-        this.classList.toggle("active");
-        let submenuItems = this.nextElementSibling;
-        if (submenuItems.style.display === "block") {
-           submenuItems.style.display = "none";
-        } else {
-           submenuItems.style.display = "block";
-        }
-     });
-
-    
     listItem.appendChild(dropdown);
     listItem.appendChild(submenu);
     
-    submenuarr[submenunr] = submenu;
 
-    let parent = document.getElementById("outputsgohere")
-    let insertbefore = document.getElementById("outputbelowhere");
-    parent.insertBefore(listItem,insertbefore);
+    divarr[submenunr] = dropdown;
+    submenuarr[submenunr] = listItem
+
+      for(let i=0; i<submenuarr.length; i++){
+        parent.insertBefore(submenuarr[i],childnode);
+
+        divarr[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var submenuItems = this.nextElementSibling;
+          if (submenuItems.style.display === "block") {
+            submenuItems.style.display = "none";
+          } else {
+            submenuItems.style.display = "block";
+          }
+      });
+      if(i!=0){
+      divarr[i-1].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var submenuItems = this.nextElementSibling;
+        if (submenuItems.style.display === "block") {
+          submenuItems.style.display = "none";
+        } else {
+          submenuItems.style.display = "block";
+        }
+      }); }
+    }   
+    submenunr++
   }
 
   
@@ -79,3 +101,11 @@ function outputappender(routename){
     console.log(outlist)
     return outlist;
 }
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+
