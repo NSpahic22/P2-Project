@@ -93,10 +93,14 @@
    </ul>
 </li>
 </ul>
-
 <form>
    <button class="buttonreload" onClick="window.location.reload();">Reload page</button>
 </form>
+<ul class="accordion-menu" id="outputsgohere">
+
+   <div id="outputbelowhere"></div>
+</ul>
+
 <div id="map"></div>
 <script async
 src="/route_diversions.js"></script>
@@ -106,6 +110,9 @@ src="/busplan.js"></script>
 
 <script async
 src="/main.js"></script>
+
+<script
+src="/outputplacer.js"></script>
 
 <script async
    src="https://maps.googleapis.com/maps/api/js?v=weekly&key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=places,geometry">
