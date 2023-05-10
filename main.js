@@ -8,6 +8,16 @@ let polyline;
 let totalDistance;
 let polypath;
 
+function calculator(){
+let arr = [null, null, 46, 35, null, 15, 92, null, 52, null, 87]
+let insertarr = [44,84,17,20]
+let i=0;
+
+for(let j=0; j<length.insertarr;j++){
+    for(let k=0; k<length.arr; k++)
+    if(arr[(insertarr[j])])
+}
+}
 
 //This function is called with our API key
 function initMap () {
