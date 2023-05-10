@@ -11,7 +11,6 @@ let polypath;
 
 //This function is called with our API key
 function initMap () {
-    
     //This function is used to calculate a distance between 2 coordinates. It returns the result in meters
     google.maps.LatLng.prototype.distanceFrom = function(newLatLng) {
         var EarthRadiusMeters = 6378137.0;
