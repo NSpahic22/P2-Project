@@ -176,9 +176,14 @@ function visualcontroller(pointsofintrest, busstops, map) {
 
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
-
+    let routeStart
     //Collects the start and end of the route via user input
-    let routeStart = document.getElementById('from').value;
+    if(document.getElementById('newid').value != undefined){
+    routestart = document.getElementById('newid').value; console.log(routestart)
+    } else {
+    routeStart = document.getElementById('from').value;
+    } 
+    
     let routeEnd = document.getElementById('to').value;
 
     //Requirements for the newly created route
