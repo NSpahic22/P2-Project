@@ -45,21 +45,28 @@
    </div>
    <ul class="submenuItems">
       <!--Indsat her-->
-      <label for="Penises">Choose a hotspot:</label><br>
-      <select name="Hotspot"> 
-         <option id="a" value="a">BIG</option>
-         <option value="b">BLACK</option>
-         <option value="c">****</option>
-      </select>   
+      <label for="Start">Start destination:</label><br>
+      <select id="from" name="Starting"> 
+         <option value="Kennedy Arkaden 9000">Kennedy Arkaden</option>
+         <option value="Bilka Skalborg">Skalborg</option>
+         <option value="Selma lagerløfsvej">AAU</option>
+         <option value="typestart">Other</option>
+      </select>
       
+      <label for="Stop">Ending destination:</label><br>
+      <select id="to" name="Stopping"> 
+         <option value="Kennedy Arkaden 9000">Kennedy Arkaden</option>
+         <option value="Bilka AAlborg">Skalborg</option>
+         <option value="Selma lagerløfsvej">AAU</option>
+         <option value="typestop">Other</option>
+      </select> 
+      <input type="button" value="Submit" id="mode">
       <!--
       <form id="routemakeinput">
             <input type="text" id="from" placeholder="Starting destination">
                <br> 
             <input type="text" id="to" placeholder="Ending destination">
                <br>
-            <input type="button" value="Submit" id="mode">
-
       </form>
       -->
    </ul>

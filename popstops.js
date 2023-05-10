@@ -1,6 +1,13 @@
 
 
+let bsbs = document.getElementById("a");
 
+bsbs.addEventListener("click", () => {
+  console.log(bsbs.value);
+})
+if(bsbs === true ){
+    console.log(bsbs);
+}
 function menuappender(){
   let card = document.getElementByName("Startspot")[0].value;
   let tekstfelt = document.createElement("input");
