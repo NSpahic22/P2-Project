@@ -102,6 +102,29 @@ function initMap () {
     document.getElementById("morestopbutton").addEventListener("click", () => {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
+    var geocoder = new google.maps.Geocoder();
+     // Configure the click listener.
+  map.addListener("click", (mapsMouseEvent) => {
+    var clocation = geocoder.geocode({location: mapsMouseEvent.latLng}, function(results, status) {
+        if(status === 'OK') {
+            if(results[0]) {
+                infoWindow = new google.maps.InfoWindow({
+                    position: mapsMouseEvent.latLng,
+                  });
+                  infoWindow.setContent(
+                    results[0].formatted_address
+                  );
+                  infoWindow.open(map);
+            }
+        }
+    }
+        );
+    // Create a new InfoWindow.
+    infoWindow = new google.maps.InfoWindow({
+      position: mapsMouseEvent.latLng,
+    });
+    
+  });
 
     //Sets map onto our site 
     directionsRenderer.setMap(map);

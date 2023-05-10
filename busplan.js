@@ -4,6 +4,7 @@ let outputarr = [];
 let busstopradius = 0;
 let marker = [];
 
+
 //The main function where the data about the bus plan is calculated and printed based on user inputs
 function passengersinput(){
     //a list of variable definitions for the different in- and outputs.
