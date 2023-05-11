@@ -118,8 +118,14 @@ function busstopWaypoints(){
 
 function createBusstops(legs){
     if(busstopcheck === 1) {
+        busstops[0] = new google.maps.Marker({
+            map: map,
+            position: legs[i].start_location,
+            draggable: false,
+            label: labels[labelIndex++ % labels.length],
+        });
         for (let i = 0; i < legs.length; i++) {
-            busstops[i] = new google.maps.Marker({
+            busstops[i+1] = new google.maps.Marker({
                 map: map,
                 position: legs[i].end_location,
                 draggable: false,
