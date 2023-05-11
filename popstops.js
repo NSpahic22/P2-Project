@@ -7,10 +7,10 @@ function menuappender(){
   let tekstfelta = document.createElement("input");
   let tekstfeltb = document.createElement("input");
   
-
-  if(tekstfelta.value!=""){
+  if(from !="typestart" || tekstfelta.value!=""){
   removeAllChildNodes(document.getElementById("appendfromhere")) }
-  if(tekstfeltb.value!=""){
+
+  if(to !="typestop" || tekstfeltb.value!=""){
   removeAllChildNodes(document.getElementById("appendtohere")) }
 
 
@@ -32,6 +32,8 @@ function menuappender(){
   }
   console.log(tekstfelta.value)
 }
+
+
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
