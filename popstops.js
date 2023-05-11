@@ -4,20 +4,36 @@ document.getElementById("to").addEventListener("click",menuappender);
 function menuappender(){
   let from = document.getElementById("from").value;
   let to = document.getElementById("to").value;
-  let tekstfelt = document.createElement("input");
-
-  tekstfelt.type = "text";
+  let tekstfelta = document.createElement("input");
+  let tekstfeltb = document.createElement("input");
   
 
-  if (from === "typestart") {
-    tekstfelt.placeholder = "Starting destination"
-    tekstfelt.id ="newid"
-    console.log(tekstfelt)
-    document.getElementById("uga").appendChild(tekstfelt)
+  if(tekstfelta.value!=""){
+  removeAllChildNodes(document.getElementById("appendfromhere")) }
+  if(tekstfeltb.value!=""){
+  removeAllChildNodes(document.getElementById("appendtohere")) }
+
+
+  
+  if(document.getElementById("appendfromhere").children.length<1){
+    if (from === "typestart") {
+      tekstfelta.placeholder = "Starting destination"
+      tekstfelta.id ="startpoint"
+      document.getElementById("appendfromhere").appendChild(tekstfelta)
+    }
   }
-  if(to === "typestop") {
-    tekstfelt.id = "to";
-    tekstfelt.placeholder = "Ending destination"
-    to.appendChild(tekstfelt)
+
+  if(document.getElementById("appendtohere").children.length<1){
+    if(to === "typestop") {
+      tekstfeltb.placeholder = "Ending destination"
+      tekstfeltb.id = "endpoint";
+      document.getElementById("appendtohere").appendChild(tekstfeltb)
+    }
+  }
+  console.log(tekstfelta.value)
+}
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
   }
 }

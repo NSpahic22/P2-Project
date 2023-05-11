@@ -177,14 +177,17 @@ function visualcontroller(pointsofintrest, busstops, map) {
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
     let routeStart
+    let routeEnd
     //Collects the start and end of the route via user input
-    if(document.getElementById('newid').value != undefined){
-    routestart = document.getElementById('newid').value; console.log(routestart)
-    } else {
     routeStart = document.getElementById('from').value;
-    } 
-    
-    let routeEnd = document.getElementById('to').value;
+    if(routeStart === "typestart"){
+        routeStart = document.getElementById("startpoint").value;
+    }
+
+    routeEnd = document.getElementById('to').value;
+    if(routeEnd === "typestop"){
+        routeEnd = document.getElementById("endpoint").value
+    }
 
     //Requirements for the newly created route
     let request = {
@@ -230,7 +233,6 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
                 }
             }
             polypath = polyline.getPath().getArray();
-            console.log(polypath);
 
             //Calculates the distance of the route
             for (let i = 0; i < legs.length; i++) {
