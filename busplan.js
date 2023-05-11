@@ -92,11 +92,7 @@ function timecalc(totaltime, users, length, stopint, busamount){
     return returnarr;
 }
 
-function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-}
+
 
 function bustime(q){
     let interval=0;
