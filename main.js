@@ -7,10 +7,16 @@ let directionsService;
 let polyline;
 let totalDistance;
 let polypath;
+let legs;
+let geocoder;
 
 
 //This function is called with our API key
 function initMap () {
+
+    geocoder = new google.maps.Geocoder();
+
+    
     
     //This function is used to calculate a distance between 2 coordinates. It returns the result in meters
     google.maps.LatLng.prototype.distanceFrom = function(newLatLng) {
@@ -102,6 +108,10 @@ function initMap () {
     document.getElementById("morestopbutton").addEventListener("click", () => {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
+    document.getElementById("timebetween").addEventListener("click", () => {
+        busstopWaypoints();
+        caluclateAndDisplayRoutes(directionsService, directionsRenderer);
+    });
 
     //Sets map onto our site 
     directionsRenderer.setMap(map);
@@ -179,6 +189,8 @@ function visualcontroller(pointsofintrest, busstops, map) {
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
 
+    
+
     //Collects the start and end of the route via user input
     let routeStart = document.getElementById('from').value;
     let routeEnd = document.getElementById('to').value;
@@ -210,7 +222,10 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
             let bounds = new google.maps.LatLngBounds();
 
             //Finds the legs of the newly created route
-            let legs = response.routes[0].legs;
+            legs = response.routes[0].legs;
+            createBusstops(legs);
+            busstopcheck = 0;
+            waypointarr = [];
 
             //Total distance of the newly created route in meters
             totalDistance = 0;
@@ -227,7 +242,6 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
                 }
             }
             polypath = polyline.getPath().getArray();
-            console.log(polypath);
 
             //Calculates the distance of the route
             for (let i = 0; i < legs.length; i++) {
@@ -246,9 +260,10 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
             
                 
         
-
+            console.log(legs.length);
             
             directionsRenderer.setDirections(response);
+            
         }
         else 
         {   
@@ -259,6 +274,7 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
             console.log()
         }
     });
+    
 }
 
 

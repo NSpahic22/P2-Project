@@ -1,8 +1,14 @@
 //Adds an event listener to the "submit" button.
 document.querySelector('input[name="passengersubmit"]').addEventListener("click", passengersinput);
+//document.querySelector('input[name="timebetweenstops"]').addEventListener("click", timeBetweenStops);
+
 let outputarr = [];
 let busstopradius = 0;
 let marker = [];
+let busstops = [];
+const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let labelIndex = 0;
+let busstopcheck;
 
 //The main function where the data about the bus plan is calculated and printed based on user inputs
 function passengersinput(){
@@ -69,34 +75,59 @@ function passengersinput(){
 
     for (let i = 1; i*busstopradius < drivingdistance*1000; i++) {
         marker[i-1] = new google.maps.Marker({
-            map: map,
             position: polyline.GetPointAtDistance(i*1000),
             draggable: true,
         });
     }
 
     for (let i = 0; i < marker.length; i++) {
+        marker[i].setMap(map);
+        }
+
+    for (let i = 0; i < marker.length; i++) {
         marker[i].addListener("dragend", () => {
             let markerPosition = marker[i].getPosition();
-            console.log(markerPosition);
-            let closestPoint = 0;
             let shortestDist = google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[0]);
-            console.log(shortestDist);
             for (let j = 1; j < polypath.length; j++) {
                 if (google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[j]) < shortestDist) {
                     shortestDist = google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[j]);
+                    marker[i].setPosition(polypath[j]);
                 }
-                
             }
-            closestPoint = j;
-            marker[i].setPosition(polypath[j])
+
         });
     }
-    
-    //marker.push(marker[i]);
 
     polyline.setMap(map);
 }   
+
+function busstopWaypoints(){
+    busstopcheck = 1;
+    morestops();
+    for (let i = 0; i < marker.length; i++) {
+        waypointarr.push({
+            location: marker[i].getPosition(),
+            stopover: true,
+        })
+    }
+    for (let i = 0; i < marker.length; i++) {
+        marker[i].setMap(null);
+        }
+        marker = [];
+}
+
+function createBusstops(legs){
+    if(busstopcheck === 1) {
+        for (let i = 0; i < legs.length; i++) {
+            busstops[i] = new google.maps.Marker({
+                map: map,
+                position: legs[i].end_location,
+                draggable: false,
+                label: labels[labelIndex++ % labels.length],
+            });
+        }
+    }
+}
 
 //a function used in the loop. This function checks if there are more elements that are non empty in the array
 function moreelements(q, arr){

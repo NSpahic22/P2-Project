@@ -8,6 +8,26 @@ let inputcounter = 1;
 let addcounter = 0;
 let waypointarr = [];
 
+/*
+This function fetches the cooridantes of an address and adds a marker to that address
+function createAddressMarker(address) {
+
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        console.log(results);
+        var latLng = {lat: results[0].geometry.location.lat (), lng: results[0].geometry.location.lng ()};
+        console.log (latLng);
+        if (status == 'OK') {
+            let addressmarker = new google.maps.Marker({
+                position: latLng,
+                map: map
+            });
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
+*/
+
 //The action of the plus button
 function appendinator(event) {
     //Creates new input bar and linebreak
@@ -34,10 +54,12 @@ function morestops(event, addressarr){
     
     for (element of waypointquery) {
         if (element.value != null && element.value != ""){
+            console.log(element.value.location);
             waypointarr.push({
                 location: element.value,
                 stopover: true,
             })
+            //createAddressMarker(element.value);
         }
         
         i++;
