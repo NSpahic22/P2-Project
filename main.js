@@ -8,10 +8,8 @@ let polyline;
 let totalDistance;
 let polypath;
 
-
 //This function is called with our API key
 function initMap () {
-    
     //This function is used to calculate a distance between 2 coordinates. It returns the result in meters
     google.maps.LatLng.prototype.distanceFrom = function(newLatLng) {
         var EarthRadiusMeters = 6378137.0;
@@ -201,10 +199,18 @@ function visualcontroller(pointsofintrest, busstops, map) {
 
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
-
+    let routeStart
+    let routeEnd
     //Collects the start and end of the route via user input
-    let routeStart = document.getElementById('from').value;
-    let routeEnd = document.getElementById('to').value;
+    routeStart = document.getElementById('from').value;
+    if(routeStart === "typestart"){
+        routeStart = document.getElementById("startpoint").value;
+    }
+
+    routeEnd = document.getElementById('to').value;
+    if(routeEnd === "typestop"){
+        routeEnd = document.getElementById("endpoint").value
+    }
 
     //Requirements for the newly created route
     let request = {
@@ -250,7 +256,6 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
                 }
             }
             polypath = polyline.getPath().getArray();
-            console.log(polypath);
 
             //Calculates the distance of the route
             for (let i = 0; i < legs.length; i++) {
