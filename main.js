@@ -326,3 +326,7 @@ ListElements.forEach(listElement =>{
          }
       });
    }
+
+   $( function() {
+    $( "#draggable" ).draggable();
+  } );
