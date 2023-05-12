@@ -10,6 +10,7 @@ const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 let labelIndex = 0;
 let busstopcheck;
 
+
 //The main function where the data about the bus plan is calculated and printed based on user inputs
 function passengersinput(){
     //a list of variable definitions for the different in- and outputs.
@@ -97,12 +98,11 @@ function passengersinput(){
 
         });
     }
-
+    busstopcheck = 1;
     polyline.setMap(map);
 }   
 
 function busstopWaypoints(){
-    busstopcheck = 1;
     morestops();
     for (let i = 0; i < marker.length; i++) {
         waypointarr.push({
@@ -116,14 +116,18 @@ function busstopWaypoints(){
         marker = [];
 }
 
+
+
 function createBusstops(legs){
     if(busstopcheck === 1) {
         busstops[0] = new google.maps.Marker({
             map: map,
-            position: legs[i].start_location,
+            position: legs[0].start_location,
             draggable: false,
             label: labels[labelIndex++ % labels.length],
+            title: "Stop number 1",
         });
+        addInfoWindow(busstops[0], "First bus stop")
         for (let i = 0; i < legs.length; i++) {
             busstops[i+1] = new google.maps.Marker({
                 map: map,
@@ -131,9 +135,26 @@ function createBusstops(legs){
                 draggable: false,
                 label: labels[labelIndex++ % labels.length],
             });
+            addInfoWindow(busstops[i+1], "Distance from last bus stop: " + legs[i].distance.value + " meters \n| " + 
+            "It will take the bus " + Math.round((legs[i].duration.value/60 + Number.EPSILON) * 100) / 100 + " minutes to reach this stop from the last stop");
+            }
         }
+        labelIndex = 0;
     }
-}
+
+    function addInfoWindow(marker, message) {
+        let infoWindow = new google.maps.InfoWindow({
+            content: message
+        });
+
+        google.maps.event.addListener(marker, 'click', function () {
+            infoWindow.open(map, marker);
+        });
+
+        google.maps.event.addListener(map, 'click', function () {
+            infoWindow.close(map, marker);
+        });
+    }
 
 //a function used in the loop. This function checks if there are more elements that are non empty in the array
 function moreelements(q, arr){

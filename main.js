@@ -9,14 +9,13 @@ let totalDistance;
 let polypath;
 let legs;
 let geocoder;
-
+const polyColor = ["blue", "red", "green", "yellow", "black", "purple", "pink", "orange"];
+let polyIndex = 0;
 
 //This function is called with our API key
 function initMap () {
-
-    geocoder = new google.maps.Geocoder();
-
     
+    geocoder = new google.maps.Geocoder();
     
     //This function is used to calculate a distance between 2 coordinates. It returns the result in meters
     google.maps.LatLng.prototype.distanceFrom = function(newLatLng) {
@@ -189,8 +188,6 @@ function visualcontroller(pointsofintrest, busstops, map) {
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
 
-    
-
     //Collects the start and end of the route via user input
     let routeStart = document.getElementById('from').value;
     let routeEnd = document.getElementById('to').value;
@@ -214,9 +211,12 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
             //Specifications for a polyline that displays the newly created route
             polyline = new google.maps.Polyline({
                 path: [],
-                strokeColor: "#FF0000",
+                strokeColor: polyColor[polyIndex++ % polyColor.length],
                 strokeWeight: 3,
             });
+            if (polyIndex === 7) {
+                polyIndex = 0;
+            }
 
             //Lat/lng limit used to keep an object within a specific location
             let bounds = new google.maps.LatLngBounds();
