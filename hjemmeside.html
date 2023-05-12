@@ -6,10 +6,13 @@
    </title>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
    <link rel="stylesheet" type="text/css" href="/style.css" />
-   
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
 </head>
 
 <body>
+<div id="draggable" class="ui-widget-content">
 <ul class="accordion-menu">
 <li class="link">
    <div class="dropdown">
@@ -33,7 +36,7 @@
                <input type="checkbox" value="Traffic" id="busstops">
                <span class="slider round"></span>
             </label>
-        <br>
+            <br>
       </form>
    </ul>
 </li>
@@ -45,14 +48,33 @@
    </div>
    <ul class="submenuItems">
       <!--Indsat her-->
+      <label for="Start">Start destination:</label><br>
+      <select id="from" name="Starting"> 
+         <option value="Kennedy Arkaden 9000">Kennedy Arkaden</option>
+         <option value="Bilka Skalborg">Skalborg</option>
+         <option value="Selma lagerløfsvej">AAU</option>
+         <option value="typestart">Other</option>
+      </select>
+      <div id="appendfromhere"></div>
+      
+      <label id="Stoplabel" for="Stop">Ending destination:</label><br>
+      <select id="to" name="Stopping"> 
+         <option value="Kennedy Arkaden 9000">Kennedy Arkaden</option>
+         <option value="Bilka AAlborg">Skalborg</option>
+         <option value="Selma lagerløfsvej">AAU</option>
+         <option value="typestop">Other</option>
+      </select> 
+      <div id="appendtohere"></div>
+      <input type="button" value="Submit" id="mode">
+      <!--
       <form id="routemakeinput">
             <input type="text" id="from" placeholder="Starting destination">
                <br> 
             <input type="text" id="to" placeholder="Ending destination">
                <br>
-            <input type="button" value="Submit" id="mode">
-
-      </form>      
+      </form>
+      -->
+      <div id="addfromabovehere"></div>
    </ul>
 </li>
 
@@ -92,15 +114,42 @@
                <div id="here!" placeholder="Outputs"></div>
             </form>  
       </form>
-         
    </ul>
 </li>
-<li class="link">
-   
-    
-</li>
-</ul>   
+</ul>
+</div>
+<form>
+   <button class="buttonreload" onClick="window.location.reload();">Reload page</button>
+</form>
+
+<!--
+<ul class="accordion-menu" id="popstopper">
+   <li class="link">
+      <div class="dropdown">
+         Popular endpoints
+         <i class="fa fa-chevron-down" aria-hidden="true"></i>
+      </div>
+      <ul class="submenuItems">
+         <form id="popplaces">
+            <input type="checkbox" name="popstop" value="Kennedy arkaden AAlborg"> Kennedy <br />
+            <input type="checkbox" name="popstop" value="AAU busterminal"> AAU bus terminal <br />
+
+         </form>
+      </ul>
+   </li>
+</ul>
+-->
+
+<ul class="accordion-menu" id="outputsgohere">
+
+   <div id="outputbelowhere"></div>
+</ul>
+
 <div id="map"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 <script async
 src="/route_diversions.js"></script>
 
@@ -109,6 +158,12 @@ src="/busplan.js"></script>
 
 <script async
 src="/main.js"></script>
+
+<script
+src="/outputplacer.js"></script>
+
+<script
+src="/popstops.js"></script>
 
 <script async
    src="https://maps.googleapis.com/maps/api/js?v=weekly&key=AIzaSyBRT0_zkNtOBiAndobigysaegoSRf1q668&callback=initMap&libraries=places,geometry">

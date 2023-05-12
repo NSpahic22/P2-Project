@@ -7,7 +7,6 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
   }
-
   #map {
       height: 100%;
   }
@@ -38,6 +37,7 @@
     width: 15%;
     left: 1%;
     z-index: 50;
+    cursor: move;
     line-height: 30px;
     max-width: 3500px;
     margin: 60px auto 20px;
@@ -177,3 +177,18 @@
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .buttonreload {
+   position: absolute;
+   top: 94%;
+   left: 90%;
+   z-index: 10;
+   color: #999;
+  }
+
+#outputsgohere {
+  left: 84%
+}
+#popstopper {
+  left: 17%
+}

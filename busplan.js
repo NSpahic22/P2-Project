@@ -1,4 +1,3 @@
-//Adds an event listener to the "submit" button.
 document.querySelector('input[name="passengersubmit"]').addEventListener("click", passengersinput);
 //document.querySelector('input[name="timebetweenstops"]').addEventListener("click", timeBetweenStops);
 
@@ -9,55 +8,47 @@ let busstops = [];
 const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 let labelIndex = 0;
 let busstopcheck;
-
+let n = 0;
+let outparr = [];
+let outputtext = []
 
 //The main function where the data about the bus plan is calculated and printed based on user inputs
 function passengersinput(){
     //a list of variable definitions for the different in- and outputs.
+    let routename = document.getElementById("routename").value;
     let weeklyavg = document.querySelector('input[name="weeklypassengers"]').value
-    let businterval = bustime(weeklyavg, drivingdistance);
-    busstopradius = document.querySelector('input[name="busstopradius"]').value;
-    let outputplace = document.getElementById("here!");
-    let outlist = document.createElement("div");
-    let breaker = document.createElement("br");
+    let businterval = bustime(weeklyavg);
+    let busstopradius = document.querySelector('input[name="busstopradius"]').value;
     let stopandtime = timecalc(totalDuration, weeklyavg, drivingdistance, busstopradius, businterval);
-    let effeciency = "No route planned"
-    if(effcalc(totalDuration, weeklyavg, drivingdistance, stopandtime[0], businterval)!=NaN){
-        effeciency = effcalc(totalDuration, weeklyavg, drivingdistance, stopandtime[0], businterval)+" enh"
-    }
     let drivetime ='No route planned.'
     if(stopandtime[1]>0||stopandtime[2]>0||stopandtime[3]>0){
     drivetime = stopandtime[1] + 'h ' + stopandtime[2] + 'm ' + stopandtime[3] + 's'; }
     stops = stopandtime[0];
-    if(drivingdistance!=0){
-    businterval+=" minutes"; }
-
-    //every time the code is run, the old data are removed before the new are added
-    removeAllChildNodes(outputplace);
-    outlist.innerHTML="";
+    let effeciency = effcalc(totalDuration, weeklyavg, drivingdistance, stops, businterval);
+    businterval+=" minutes";
 
     //an array containing all the data that is printed for the user about the bus route
-    let outparr = [
+    outparr = [
         drivingdistance + "km",
         drivetime,
         weeklyavg,
         busstopradius,
         stops,
         businterval,
-        effeciency  
+        effeciency
     ];
 
     //the text, which describes the aforementioned data
-    let outputtext = [
+    outputtext = [
         "Route length: ",
-        "Driving time: ",
+        "driving time: ",
         "Average weekly passengers: ",
         "Radius of bus stops: ",
-        "Amount of bus stops: ",
+        "Amount of bus stops on route: ",
         "Interval between buses: ",
         "Effeciency score: "
     ];
-
+    outputplacer(routename);
     //This loop prints the data and the text, and adds line spaces for the readability of the data
     outlist.id = "additional_outputs"
     for(let i=0; i<outparr.length; i++){
@@ -76,11 +67,11 @@ function passengersinput(){
 
     for (let i = 1; i*busstopradius < drivingdistance*1000; i++) {
         marker[i-1] = new google.maps.Marker({
+            map: map,
             position: polyline.GetPointAtDistance(i*1000),
             draggable: true,
         });
     }
-
     for (let i = 0; i < marker.length; i++) {
         marker[i].setMap(map);
         }
@@ -88,18 +79,26 @@ function passengersinput(){
     for (let i = 0; i < marker.length; i++) {
         marker[i].addListener("dragend", () => {
             let markerPosition = marker[i].getPosition();
+            console.log(markerPosition);
+            let closestPoint = 0;
             let shortestDist = google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[0]);
+            console.log(shortestDist);
             for (let j = 1; j < polypath.length; j++) {
                 if (google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[j]) < shortestDist) {
                     shortestDist = google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[j]);
                     marker[i].setPosition(polypath[j]);
                 }
+                
             }
-
+            closestPoint = j;
+            marker[i].setPosition(polypath[j])
         });
     }
+    
+    //marker.push(marker[i]);
     busstopcheck = 1;
     polyline.setMap(map);
+    n+=2
 }   
 
 function busstopWaypoints(){
@@ -156,6 +155,7 @@ function createBusstops(legs){
         });
     }
 
+
 //a function used in the loop. This function checks if there are more elements that are non empty in the array
 function moreelements(q, arr){
     let moreelementsinlist = false;
@@ -167,27 +167,26 @@ function moreelements(q, arr){
     return moreelementsinlist;
 }
 
-//The calculator of the effeciency score of the bus route
 function effcalc(totaltime, users, length, stopint, busamount) {
     if(stopint>length) {stopint=1};
     return Math.floor(((totaltime/users)+((totaltime/busamount)/stopint+((users/stopint)*(busamount/users)))*length)*200/users)
 }
 
-//the calculator of the amount of stops needed on the route and the time it takes to drive the route in seconds, hours and minutes
 function timecalc(totaltime, users, length, stopint, busamount){
     length=length*1000
 
-    let stops = ((length-(length % stopint))/stopint)/2;
+    let stops = (length-(length % stopint))/stopint;
     let peopleprstopprprminprbus = ((users-users%7)/7)/(24*60)*busamount;
     let additionalminutes = 0
     for(i=0;i<=peopleprstopprprminprbus;i+=5){
         additionalminutes+=60;
     }
-    
+    console.log(totaltime);
     if(totaltime>0){
     totaltime+=additionalminutes; }
+    console.log(totaltime);
     
-    //The time is put into hours, minutes and seconds.
+
     const hours = Math.floor(totaltime / 3600);
     const minutes = Math.floor((totaltime - (hours * 3600)) / 60);
     const seconds = Math.floor(totaltime - (hours * 3600) - (minutes * 60));
@@ -196,21 +195,10 @@ function timecalc(totaltime, users, length, stopint, busamount){
     return returnarr;
 }
 
-//removes all childen from a node, needed in the main function of the busplan.
-function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
-}
 
 
-//bases the time interval between buses on amount of average weekly users
-function bustime(q, n){
+function bustime(q){
     let interval=0;
-    if(n === 0){
-        interval = "no route planned";
-        return interval;
-    }
     if(q<0){
         interval = 'error'
     } if(q>0 && q<=1000) {

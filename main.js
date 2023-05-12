@@ -107,6 +107,29 @@ function initMap () {
     document.getElementById("morestopbutton").addEventListener("click", () => {
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
     });
+    var geocoder = new google.maps.Geocoder();
+     // Configure the click listener.
+  map.addListener("click", (mapsMouseEvent) => {
+    var clocation = geocoder.geocode({location: mapsMouseEvent.latLng}, function(results, status) {
+        if(status === 'OK') {
+            if(results[0]) {
+                infoWindow = new google.maps.InfoWindow({
+                    position: mapsMouseEvent.latLng,
+                  });
+                  infoWindow.setContent(
+                    results[0].formatted_address
+                  );
+                  infoWindow.open(map);
+            }
+        }
+    }
+        );
+    // Create a new InfoWindow.
+    infoWindow = new google.maps.InfoWindow({
+      position: mapsMouseEvent.latLng,
+    });
+    
+  });
     document.getElementById("timebetween").addEventListener("click", () => {
         busstopWaypoints();
         caluclateAndDisplayRoutes(directionsService, directionsRenderer);
@@ -187,10 +210,18 @@ function visualcontroller(pointsofintrest, busstops, map) {
 
 //Function called when user clicks submit
 function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
-
+    let routeStart
+    let routeEnd
     //Collects the start and end of the route via user input
-    let routeStart = document.getElementById('from').value;
-    let routeEnd = document.getElementById('to').value;
+    routeStart = document.getElementById('from').value;
+    if(routeStart === "typestart"){
+        routeStart = document.getElementById("startpoint").value;
+    }
+
+    routeEnd = document.getElementById('to').value;
+    if(routeEnd === "typestop"){
+        routeEnd = document.getElementById("endpoint").value
+    }
 
     //Requirements for the newly created route
     let request = {
@@ -319,3 +350,7 @@ ListElements.forEach(listElement =>{
          }
       });
    }
+
+   $( function() {
+    $( "#draggable" ).draggable();
+  } );

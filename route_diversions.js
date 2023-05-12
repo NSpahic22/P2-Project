@@ -36,7 +36,7 @@ function appendinator(event) {
     inputcreater.name = "diversion"
 
     //Gives input bar text and an ID
-    inputcreater.placeholder = "Input extra destination";
+    inputcreater.placeholder = "Input extra destination" ;
     inputcreater.setAttribute("id", 'address' + inputcounter++)
  
     //Appends the input bar and linebreaker to the HTML-code
