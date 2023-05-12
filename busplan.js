@@ -48,22 +48,6 @@ function passengersinput(){
         "Interval between buses: ",
         "Effeciency score: "
     ];
-    outputplacer(routename);
-    //This loop prints the data and the text, and adds line spaces for the readability of the data
-    outlist.id = "additional_outputs"
-    for(let i=0; i<outparr.length; i++){
-        if(outparr[i]!=""){
-        outlist.innerHTML += outputtext[i]
-        outlist.appendChild(breaker);
-        outlist.innerHTML += outparr[i];
-
-        if(moreelements(i,outparr)==true){
-            outlist.innerHTML += "\n"
-            outlist.appendChild(breaker);
-        }
-    }
-    }
-    outputplace.append(outlist);
 
     for (let i = 1; i*busstopradius < drivingdistance*1000; i++) {
         marker[i-1] = new google.maps.Marker({
