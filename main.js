@@ -57,6 +57,7 @@ function initMap () {
     //Assigning google functions
     const directionsRenderer = new google.maps.DirectionsRenderer({
         draggable: false,
+        suppressMarkers: true,
     });
     const directionsService = new google.maps.DirectionsService();
     const transitLayer = new google.maps.TransitLayer();
@@ -255,8 +256,9 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
             //Finds the legs of the newly created route
             legs = response.routes[0].legs;
             createBusstops(legs);
-            busstopcheck = 0;
             waypointarr = [];
+            busstopcheck = 0;
+            
 
             //Total distance of the newly created route in meters
             totalDistance = 0;
@@ -285,13 +287,6 @@ function caluclateAndDisplayRoutes(directionsService, directionsRenderer) {
                 totalDuration += legs[i].duration.value;
         
             }
-
-            //Creates a marker for every 1000 metres traveled along the path
-
-            
-                
-        
-            console.log(legs.length);
             
             directionsRenderer.setDirections(response);
             

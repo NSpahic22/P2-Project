@@ -10,7 +10,9 @@ let labelIndex = 0;
 let busstopcheck;
 let n = 0;
 let outparr = [];
-let outputtext = []
+let outputtext = [];
+let removedStops = [];
+let removedIndex = 0;
 
 //The main function where the data about the bus plan is calculated and printed based on user inputs
 function passengersinput(){
@@ -49,24 +51,33 @@ function passengersinput(){
         "Effeciency score: "
     ];
 
-    for (let i = 1; i*busstopradius < drivingdistance*1000; i++) {
+    for (let i = 1; i*busstopradius < totalDistance; i++) {
         marker[i-1] = new google.maps.Marker({
             map: map,
-            position: polyline.GetPointAtDistance(i*1000),
+            position: polyline.GetPointAtDistance(i*busstopradius),
             draggable: true,
         });
+        marker[i-1].setMap(map);
+        
     }
-    for (let i = 0; i < marker.length; i++) {
-        marker[i].setMap(map);
+
+        for (let i = 0; i < marker.length; i++) {
+            marker[i].addListener('click', () => {
+                marker[i].setMap(null);
+                removedStops[removedIndex] = i;
+                removedIndex++;
+            });
+            
         }
+    
+    
+
+    console.log(marker.length + "okyayy");
 
     for (let i = 0; i < marker.length; i++) {
         marker[i].addListener("dragend", () => {
             let markerPosition = marker[i].getPosition();
-            console.log(markerPosition);
-            let closestPoint = 0;
             let shortestDist = google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[0]);
-            console.log(shortestDist);
             for (let j = 1; j < polypath.length; j++) {
                 if (google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[j]) < shortestDist) {
                     shortestDist = google.maps.geometry.spherical.computeDistanceBetween(markerPosition, polypath[j]);
@@ -74,8 +85,7 @@ function passengersinput(){
                 }
                 
             }
-            closestPoint = j;
-            marker[i].setPosition(polypath[j])
+            
         });
     }
     
@@ -86,6 +96,19 @@ function passengersinput(){
 }   
 
 function busstopWaypoints(){
+    
+if (removedStops != 0) {
+    removedStops.sort(function(a, b) {
+        return a - b;
+      });
+    }
+    
+    for (let i = removedStops.length-1; i > -1; i--) {
+        marker.splice(removedStops[i],1);
+    }
+    removedStops = [];
+    removedIndex = 0;
+   
     morestops();
     for (let i = 0; i < marker.length; i++) {
         waypointarr.push({
@@ -123,6 +146,7 @@ function createBusstops(legs){
             }
         }
         labelIndex = 0;
+        
     }
 
     function addInfoWindow(marker, message) {
