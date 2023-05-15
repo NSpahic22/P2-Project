@@ -111,14 +111,19 @@ function initMap () {
     var geocoder = new google.maps.Geocoder();
      // Configure the click listener.
   map.addListener("click", (mapsMouseEvent) => {
-    var clocation = geocoder.geocode({location: mapsMouseEvent.latLng}, function(results, status) {
+    //Lets us tranform lat and lng to an address
+    geocoder.geocode({location: mapsMouseEvent.latLng}, function(results, status) {
         if(status === 'OK') {
             if(results[0]) {
                 infoWindow = new google.maps.InfoWindow({
                     position: mapsMouseEvent.latLng,
                   });
+                  let myString = JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2);
+                  myString = myString.replace(/[^0-9., ]/g, '');;
+                  myString += "<br>";
+                  myString += results[0].formatted_address
                   infoWindow.setContent(
-                    results[0].formatted_address
+                    myString, 
                   );
                   infoWindow.open(map);
             }

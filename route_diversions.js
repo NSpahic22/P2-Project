@@ -49,7 +49,10 @@ function morestops(event, addressarr){
     const waypointquery = document.querySelectorAll('[name="diversion"]');
     let i = 0;
     //Emptying the array, so only the addresses that are displayed, will be made into a route
-    waypointarr = [];
+    for(let j = 0; j< waypointarr.length; j++) {
+        waypointarr[j] = null;
+    }
+    
     //Taking the value, and making into readable locations for google api
     
     for (element of waypointquery) {

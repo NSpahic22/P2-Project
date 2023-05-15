@@ -35,7 +35,6 @@ function passengersinput(){
         drivetime,
         weeklyavg,
         busstopradius,
-        stops,
         businterval,
         effeciency
     ];
@@ -46,11 +45,11 @@ function passengersinput(){
         "driving time: ",
         "Average weekly passengers: ",
         "Radius of bus stops: ",
-        "Amount of bus stops on route: ",
         "Interval between buses: ",
         "Effeciency score: "
     ];
 
+    outputplacer(routename);
     for (let i = 1; i*busstopradius < totalDistance; i++) {
         marker[i-1] = new google.maps.Marker({
             map: map,
