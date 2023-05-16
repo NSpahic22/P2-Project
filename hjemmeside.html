@@ -13,110 +13,104 @@
 
 <body>
 <div id="draggable" class="ui-widget-content">
-<ul class="accordion-menu">
-<li class="link">
-   <div class="dropdown">
-      <i class="fa fa-chevron-down"></i>
-      Optional
-   </div>
-   <ul class="submenuItems">
-      <form id="options">  
-         Traffic <br>
-            <label class="switch">
-               <input type="checkbox" value="Traffic" id="Traffic">
-               <span class="slider round"></span>
-            </label>
-               <br> Points of interest <br>
-            <label class="switch">
-               <input type="checkbox" value="POI" id="Pointsofintrest">
-               <span class="slider round"></span>
-            </label>
-            <br> Bus stops <br>
-            <label class="switch">
-               <input type="checkbox" value="Traffic" id="busstops">
-               <span class="slider round"></span>
-            </label>
-            <br>
-      </form>
-   </ul>
-</li>
-         
-<li class="link">
-   <div class="dropdown">
-      Route Maker
-      <i class="fa fa-chevron-down" aria-hidden="true"></i>
-   </div>
-   <ul class="submenuItems">
-      <!--Indsat her-->
-      <label for="Start">Start destination:</label><br>
-      <select id="from" name="Starting"> 
-         <option value="Kennedy Arkaden 9000">Kennedy Arkaden</option>
-         <option value="57.004223817268816, 9.88020658493042">Skalborg</option>
-         <option value="57.01604978880167, 9.99112547736237">AAU</option>
-         <option value="typestart">Other</option>
-      </select>
-      <div id="appendfromhere"></div>
-      
-      <label id="Stoplabel" for="Stop">Ending destination:</label><br>
-      <select id="to" name="Stopping"> 
-         <option value="Kennedy Arkaden 9000">Kennedy Arkaden</option>
-         <option value="57.00402652227623, 9.879423379898071">Skalborg</option>
-         <option value="57.01604978880167, 9.99112547736237">AAU</option>
-         <option value="typestop">Other</option>
-      </select> 
-      <div id="appendtohere"></div>
-      <input type="button" value="Submit" id="mode">
-      <!--
-      <form id="routemakeinput">
-            <input type="text" id="from" placeholder="Starting destination">
-               <br> 
-            <input type="text" id="to" placeholder="Ending destination">
-               <br>
-      </form>
-      -->
-      <div id="addfromabovehere"></div>
-   </ul>
-</li>
+   <ul class="accordion-menu">
+      <li class="link">
+         <div class="dropdown">
+            <i class="fa fa-chevron-down"></i>
+            Optional
+         </div>
+         <ul class="submenuItems">
+            <form id="options">  
+               Traffic <br>
+                  <label class="switch">
+                     <input type="checkbox" value="Traffic" id="Traffic">
+                     <span class="slider round"></span>
+                  </label>
+                     <br> Points of interest <br>
+                  <label class="switch">
+                     <input type="checkbox" value="POI" id="Pointsofintrest">
+                     <span class="slider round"></span>
+                  </label>
+                  <br> Bus stops <br>
+                  <label class="switch">
+                     <input type="checkbox" value="Traffic" id="busstops">
+                     <span class="slider round"></span>
+                  </label>
+                  <br>
+            </form>
+         </ul>
+      </li>
+               
+      <li class="link">
+         <div class="dropdown">
+            Route Maker
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+         </div>
+         <ul class="submenuItems">
+            <!--Indsat her-->
+            <label for="Start">Start destination:</label><br>
+            <select id="from" name="Starting"> 
+               <option value="Kennedy Arkaden 9000">Kennedy Arkaden</option>
+               <option value="57.004223817268816, 9.88020658493042">Skalborg</option>
+               <option value="57.01604978880167, 9.99112547736237">AAU</option>
+               <option value="typestart">Other</option>
+            </select>
+            <div id="appendfromhere"></div>
+            
+            <label id="Stoplabel" for="Stop">Ending destination:</label><br>
+            <select id="to" name="Stopping"> 
+               <option value="Kennedy Arkaden 9000">Kennedy Arkaden</option>
+               <option value="57.00402652227623, 9.879423379898071">Skalborg</option>
+               <option value="57.01604978880167, 9.99112547736237">AAU</option>
+               <option value="typestop">Other</option>
+            </select> 
+            <div id="appendtohere"></div>
+            <input type="button" value="Submit" id="mode">
+            <!--
+            <form id="routemakeinput">
+                  <input type="text" id="from" placeholder="Starting destination">
+                     <br> 
+                  <input type="text" id="to" placeholder="Ending destination">
+                     <br>
+            </form>
+            -->
+            <div id="addfromabovehere"></div>
+         </ul>
+      </li>
 
-<li class="link">
-   <div class="dropdown">
-      Re-routing
-      <i class="fa fa-chevron-down" aria-hidden="true"></i>
-   </div>
-   <ul class="submenuItems">
-      <form id="extraplaces"> 
-            <legend> <b></b> </legend>
-            <input type="button" name="Submit" id="morestopbutton" value="Submit">
-            <input type="button" name="addmore" value="+">
-               <br>
-            <input type="text" name="diversion" placeholder="Route addition">
-               <br>
-      </form>
-   </ul>
-</li>   
+      <li class="link">
+         <div class="dropdown">
+            Re-routing
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+         </div>
+         <ul class="submenuItems">
+            <form id="extraplaces"> 
+                  <legend> <b></b> </legend>
+                  <input type="button" name="Submit" id="morestopbutton" value="Submit">
+                  <input type="button" name="addmore" value="+">
+                     <br>
+                  <input type="text" name="diversion" placeholder="Route addition">
+                     <br>
+            </form>
+         </ul>
+      </li>   
 
-<li class="link">
-   <div class="dropdown">
-      Route Details
-      <i class="fa fa-chevron-down" aria-hidden="true"></i>
-   </div>
-   <ul class="submenuItems">
-      <form id="avgpassengers">
-            <input type="text" name="weeklypassengers" id="passengertext" placeholder="Avg. weekly passengers">
-            <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
-            <input type="text" name="routename" id="routename" placeholder="Name your route">
-            <input type="button" name="passengersubmit" value="Submit">
-            <input type="button" name="timebetweenstops" value="Calc time" id="timebetween">
-            <div>
-               <b>Outputs</b>
-            </div >
-            <form id="dataouput">
-               <div id="here!" placeholder="Outputs"></div>
-            </form>  
-      </form>
+      <li class="link">
+         <div class="dropdown">
+            Route Details
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+         </div>
+         <ul class="submenuItems">
+            <form id="avgpassengers">
+                  <input type="text" name="weeklypassengers" id="passengertext" placeholder="Avg. weekly passengers">
+                  <input type="text" name="busstopradius" id="radiustext" placeholder="Radius of bus stops">
+                  <input type="text" name="routename" id="routename" placeholder="Name your route">
+                  <input type="button" name="passengersubmit" value="Submit">
+                  <input type="button" name="timebetweenstops" value="Calc time" id="timebetween">  
+            </form>
+         </ul>
+      </li>
    </ul>
-</li>
-</ul>
 </div>
 <form>
    <button class="buttonreload" onClick="window.location.reload();">Reload page</button>

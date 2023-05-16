@@ -42,7 +42,7 @@ function passengersinput(){
     //the text, which describes the aforementioned data
     outputtext = [
         "Route length: ",
-        "driving time: ",
+        "Driving time: ",
         "Average weekly passengers: ",
         "Radius of bus stops: ",
         "Interval between buses: ",
