@@ -28,6 +28,23 @@ function passengersinput(){
     stops = stopandtime[0];
     let effeciency = effcalc(totalDuration, weeklyavg, drivingdistance, stops, businterval);
     businterval+=" minutes";
+// This makes sure the user cannot enter negative numbers nor letters into number only input boxes
+    if(busstopradius < 0) {
+        busstopradius = busstopradius *  -1;
+    }
+
+    if(isNaN(busstopradius)) {
+        return alert("The bus stop radius needs to be a number");
+    }
+
+    if(weeklyavg < 0) {
+        busstopradius = busstopradius *  -1;
+    }
+
+    if(isNaN(weeklyavg)) {
+        return alert("The weekly average needs to be a number");
+    }
+
 
     //an array containing all the data that is printed for the user about the bus route
     outparr = [
