@@ -69,10 +69,6 @@ function passengersinput(){
             
         }
     
-    
-
-    console.log(marker.length + "okyayy");
-
     for (let i = 0; i < marker.length; i++) {
         marker[i].addListener("dragend", () => {
             let markerPosition = marker[i].getPosition();
@@ -176,6 +172,10 @@ function moreelements(q, arr){
 
 function effcalc(totaltime, users, length, stopint, busamount) {
     if(stopint>length) {stopint=1};
+        if(users < 5000){
+            let failed ="Too few passengers to calculate route"
+            return failed;
+        }
     return Math.floor(((totaltime/users)+((totaltime/busamount)/stopint+((users/stopint)*(busamount/users)))*length)*200/users)
 }
 
@@ -201,8 +201,6 @@ function timecalc(totaltime, users, length, stopint, busamount){
     let returnarr = [stops, hours, minutes, seconds];
     return returnarr;
 }
-
-
 
 function bustime(q){
     let interval=0;
