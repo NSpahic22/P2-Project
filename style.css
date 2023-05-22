@@ -183,7 +183,10 @@
    top: 94%;
    left: 90%;
    z-index: 10;
-   color: #999;
+   color: #ffffff;
+   background-color: #ff0000;
+   border-radius: 6px;
+   box-shadow: 0 0 10px #000;
   }
 
 #outputsgohere {

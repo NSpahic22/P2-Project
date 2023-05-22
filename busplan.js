@@ -28,6 +28,23 @@ function passengersinput(){
     stops = stopandtime[0];
     let effeciency = effcalc(totalDuration, weeklyavg, drivingdistance, stops, businterval);
     businterval+=" minutes";
+// This makes sure the user cannot enter negative numbers nor letters into number only input boxes
+    if(busstopradius < 0) {
+        busstopradius = busstopradius *  -1;
+    }
+
+    if(isNaN(busstopradius)) {
+        return alert("The bus stop radius needs to be a number");
+    }
+
+    if(weeklyavg < 0) {
+        busstopradius = busstopradius *  -1;
+    }
+
+    if(isNaN(weeklyavg)) {
+        return alert("The weekly average needs to be a number");
+    }
+
 
     //an array containing all the data that is printed for the user about the bus route
     outparr = [
@@ -69,10 +86,6 @@ function passengersinput(){
             
         }
     
-    
-
-    console.log(marker.length + "okyayy");
-
     for (let i = 0; i < marker.length; i++) {
         marker[i].addListener("dragend", () => {
             let markerPosition = marker[i].getPosition();
@@ -176,6 +189,10 @@ function moreelements(q, arr){
 
 function effcalc(totaltime, users, length, stopint, busamount) {
     if(stopint>length) {stopint=1};
+        if(users < 5000){
+            let failed ="Too few passengers to calculate route"
+            return failed;
+        }
     return Math.floor(((totaltime/users)+((totaltime/busamount)/stopint+((users/stopint)*(busamount/users)))*length)*200/users)
 }
 
@@ -201,8 +218,6 @@ function timecalc(totaltime, users, length, stopint, busamount){
     let returnarr = [stops, hours, minutes, seconds];
     return returnarr;
 }
-
-
 
 function bustime(q){
     let interval=0;
