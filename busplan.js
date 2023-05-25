@@ -1,5 +1,4 @@
 document.querySelector('input[name="passengersubmit"]').addEventListener("click", passengersinput);
-//document.querySelector('input[name="timebetweenstops"]').addEventListener("click", timeBetweenStops);
 
 let outputarr = [];
 let busstopradius = 0;
@@ -28,6 +27,7 @@ function passengersinput(){
     stops = stopandtime[0];
     let effeciency = effcalc(totalDuration, weeklyavg, drivingdistance, stops, businterval);
     businterval+=" minutes";
+
 // This makes sure the user cannot enter negative numbers nor letters into number only input boxes
     if(busstopradius < 0) {
         busstopradius = busstopradius *  -1;
@@ -77,14 +77,14 @@ function passengersinput(){
         
     }
 
-        for (let i = 0; i < marker.length; i++) {
-            marker[i].addListener('click', () => {
-                marker[i].setMap(null);
-                removedStops[removedIndex] = i;
-                removedIndex++;
-            });
-            
-        }
+    for (let i = 0; i < marker.length; i++) {
+        marker[i].addListener('click', () => {
+            marker[i].setMap(null);
+            removedStops[removedIndex] = i;
+            removedIndex++;
+        });
+        
+    }
     
     for (let i = 0; i < marker.length; i++) {
         marker[i].addListener("dragend", () => {
@@ -100,8 +100,6 @@ function passengersinput(){
             
         });
     }
-    
-    //marker.push(marker[i]);
     busstopcheck = 1;
     polyline.setMap(map);
     n+=2
@@ -205,10 +203,8 @@ function timecalc(totaltime, users, length, stopint, busamount){
     for(i=0;i<=peopleprstopprprminprbus;i+=5){
         additionalminutes+=60;
     }
-    console.log(totaltime);
     if(totaltime>0){
     totaltime+=additionalminutes; }
-    console.log(totaltime);
     
 
     const hours = Math.floor(totaltime / 3600);

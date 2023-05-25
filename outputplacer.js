@@ -98,7 +98,6 @@ function outputappender(routename){
         }
       }
     }
-    console.log(outlist)
     return outlist;
 }
 

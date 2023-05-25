@@ -320,21 +320,7 @@ function callback(response, status) {
   }
 
 // Basically så giver den alle link en active toggle når man trykker på den 
-let ListElements = document.querySelectorAll('link');
 
-ListElements.forEach(listElement =>{
-    listElement.addEventListener('click', () => {
-        if (listElement.classisList.contains('active')){
-            listElement.classicList.remove('active');
-        }else{
-            listElement.forEach(ListE => {
-                ListE.classList.remove('active');
-            })
-            listElement.classList.toggle('active');
-        }
-    })
-});
-// Det her var fikset til hvorfor den ikke gad at virke før, uden den her vil den ikke dropdown. Har ikke helt styr på hvordan den virker.
 // Get all dropdown buttons
    var dropdowns = document.getElementsByClassName("dropdown");
 

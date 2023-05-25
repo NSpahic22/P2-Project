@@ -4,11 +4,11 @@
    <title>
       Route-maker
    </title>
+
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
    <link rel="stylesheet" type="text/css" href="/style.css" />
    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-
+   <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 
 <body>
@@ -47,7 +47,6 @@
             <i class="fa fa-chevron-down" aria-hidden="true"></i>
          </div>
          <ul class="submenuItems">
-            <!--Indsat her-->
             <label for="Start">Start destination:</label><br>
             <select id="from" name="Starting"> 
                <option value="Kennedy Arkaden 9000">Kennedy Arkaden</option>
@@ -66,14 +65,6 @@
             </select> 
             <div id="appendtohere"></div>
             <input type="button" value="Submit" id="mode">
-            <!--
-            <form id="routemakeinput">
-                  <input type="text" id="from" placeholder="Starting destination">
-                     <br> 
-                  <input type="text" id="to" placeholder="Ending destination">
-                     <br>
-            </form>
-            -->
             <div id="addfromabovehere"></div>
          </ul>
       </li>
@@ -115,24 +106,6 @@
 <form>
    <button class="buttonreload" id="buttonreload" onclick="return confirm('Are you sure?')">Reload page</button>
 </form>
-
-<!--
-<ul class="accordion-menu" id="popstopper">
-   <li class="link">
-      <div class="dropdown">
-         Popular endpoints
-         <i class="fa fa-chevron-down" aria-hidden="true"></i>
-      </div>
-      <ul class="submenuItems">
-         <form id="popplaces">
-            <input type="checkbox" name="popstop" value="Kennedy arkaden AAlborg"> Kennedy <br />
-            <input type="checkbox" name="popstop" value="AAU busterminal"> AAU bus terminal <br />
-
-         </form>
-      </ul>
-   </li>
-</ul>
--->
 
 <ul class="accordion-menu" id="outputsgohere">
 
