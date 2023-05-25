@@ -51,9 +51,9 @@ function passengersinput(){
         drivingdistance + "km",
         drivetime,
         weeklyavg,
-        busstopradius,
-        businterval,
-        effeciency
+        //busstopradius,
+        //businterval,
+        effeciency,
     ];
 
     //the text, which describes the aforementioned data
@@ -61,9 +61,9 @@ function passengersinput(){
         "Route length: ",
         "Driving time: ",
         "Average weekly passengers: ",
-        "Radius of bus stops: ",
-        "Interval between buses: ",
-        "Effeciency score: "
+        //"Radius of bus stops: ",
+        //"Interval between buses: ",
+        "Efficiency score: "
     ];
 
     outputplacer(routename);
